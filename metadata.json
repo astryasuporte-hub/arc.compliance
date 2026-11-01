@@ -1,0 +1,6 @@
+{
+  "name": "ARC Compliance & Advisory",
+  "description": "Consultoria boutique especializada em compliance, governança corporativa, gestão de riscos e integridade empresarial para médias e grandes organizações.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
