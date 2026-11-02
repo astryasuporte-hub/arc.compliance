@@ -3,7 +3,6 @@ import { Navbar } from './components/Navbar.tsx';
 import { Hero } from './components/Hero.tsx';
 import { SolutionsSection } from './components/SolutionsSection.tsx';
 import { DifferentiatorsSection } from './components/DifferentiatorsSection.tsx';
-import { Approach } from './components/Approach.tsx';
 import { About } from './components/About.tsx';
 import { ContactSection } from './components/ContactSection.tsx';
 import { Footer } from './components/Footer.tsx';
@@ -22,22 +21,19 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#10243C] text-[#10243C] selection:bg-[#B69A6B]/30 selection:text-[#B69A6B] font-sans">
+    <div className="min-h-screen bg-[#10243C] text-[#10243C] selection:bg-[#B69A6B]/30 selection:text-[#B69A6B] font-sans w-full max-w-full overflow-x-hidden relative">
       {/* Top Fixed Luxury Navigation with White Logo */}
       <Navbar onOpenContact={() => handleOpenContact()} />
 
-      <main>
-        {/* Modern & Objective Hero with Animated Numbers & Clean CTAs */}
+      <main className="w-full max-w-full overflow-x-hidden relative">
+        {/* Modern & Objective Hero with Clean CTAs */}
         <Hero onOpenContact={() => handleOpenContact()} />
 
-        {/* 6 Structured Corporate Solutions (Inspired by Wise Solution Architecture) */}
+        {/* Structured Corporate Solutions */}
         <SolutionsSection onSelectSolution={(sol) => handleOpenContact(sol)} />
 
-        {/* Strategic Differentiators with Rapid Rolling Numbers Banner */}
+        {/* Strategic Differentiators */}
         <DifferentiatorsSection onOpenContact={() => handleOpenContact()} />
-
-        {/* 5-Phase Structured Methodology */}
-        <Approach />
 
         {/* About ARC Compliance & Senior Advisory */}
         <About onOpenContact={() => handleOpenContact()} />

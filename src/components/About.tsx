@@ -15,10 +15,10 @@ export const About: React.FC<AboutProps> = ({ onOpenContact }) => {
           
           {/* Left Column: Brand Story & Real Mission */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.5 }}
             className="lg:col-span-6 space-y-6"
           >
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#10243C]/5 border border-[#10243C]/15 text-xs font-bold text-[#B69A6B] uppercase tracking-wider font-heading">
@@ -63,39 +63,45 @@ export const About: React.FC<AboutProps> = ({ onOpenContact }) => {
 
           {/* Right Column: Values & Differentiators */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
             className="lg:col-span-6 space-y-5"
           >
-            <div className="p-6 rounded-2xl bg-[#FFFCF8] border border-[#E8DFD2] shadow-sm flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#10243C] text-[#B69A6B] flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-6 h-6" />
+            <motion.div
+              whileHover={{ y: -5, scale: 1.01, transition: { duration: 0.2 } }}
+              className="p-6 rounded-2xl bg-[#FFFCF8] border border-[#E8DFD2] hover:border-[#B69A6B]/50 hover:shadow-xl hover:shadow-[#B69A6B]/10 transition-all flex items-start gap-4 group cursor-pointer"
+            >
+              <div className="w-12 h-12 rounded-xl bg-[#10243C] text-[#B69A6B] flex items-center justify-center shrink-0 group-hover:bg-[#162D4A] transition-colors shadow-sm">
+                <ShieldCheck className="w-6 h-6 group-hover:scale-110 transition-transform" />
               </div>
               <div>
-                <h3 className="font-heading text-base font-bold text-[#10243C] mb-1">
+                <h3 className="font-heading text-base font-bold text-[#10243C] mb-1 group-hover:text-[#B69A6B] transition-colors">
                   Blindagem da Alta Gestão
                 </h3>
                 <p className="text-xs text-[#414850] leading-relaxed">
                   Protegemos a tomada de decisão de sócios, diretores e administradores, estabelecendo diretrizes formais que delimitam responsabilidades e preservam o patrimônio da empresa.
                 </p>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="p-6 rounded-2xl bg-[#FFFCF8] border border-[#E8DFD2] shadow-sm flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#10243C] text-[#B69A6B] flex items-center justify-center shrink-0">
-                <Award className="w-6 h-6" />
+            <motion.div
+              whileHover={{ y: -5, scale: 1.01, transition: { duration: 0.2 } }}
+              className="p-6 rounded-2xl bg-[#FFFCF8] border border-[#E8DFD2] hover:border-[#B69A6B]/50 hover:shadow-xl hover:shadow-[#B69A6B]/10 transition-all flex items-start gap-4 group cursor-pointer"
+            >
+              <div className="w-12 h-12 rounded-xl bg-[#10243C] text-[#B69A6B] flex items-center justify-center shrink-0 group-hover:bg-[#162D4A] transition-colors shadow-sm">
+                <Award className="w-6 h-6 group-hover:scale-110 transition-transform" />
               </div>
               <div>
-                <h3 className="font-heading text-base font-bold text-[#10243C] mb-1">
+                <h3 className="font-heading text-base font-bold text-[#10243C] mb-1 group-hover:text-[#B69A6B] transition-colors">
                   Cultura de Integridade & Ambiente Saudável
                 </h3>
                 <p className="text-xs text-[#414850] leading-relaxed">
                   Redução de riscos de conduta e conflitos internos por meio de normas éticas acessíveis, comunicação transparente e lideranças preparadas para orientar suas equipes.
                 </p>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
 
         </div>

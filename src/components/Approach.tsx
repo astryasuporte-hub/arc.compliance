@@ -101,7 +101,7 @@ export const Approach: React.FC = () => {
           </h2>
 
           <p className="text-base text-[#414850] font-normal leading-relaxed">
-            Metodologia em 5 etapas progressivas desenhada para gerar segurança jurídica sem gerar atrito nas vendas e na rotina operacional.
+            Metodologia em 5 etapas progressivas desenhada para gerar eficiência e conformidade sem atrito na rotina operacional.
           </p>
         </div>
 
@@ -109,17 +109,19 @@ export const Approach: React.FC = () => {
         <div className="relative mb-12">
           <div className="hidden lg:block absolute top-7 left-12 right-12 h-[2px] bg-[#E8DFD2] z-0" />
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 relative z-10">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4 relative z-10">
             {PHASES.map((p, idx) => {
               const isActive = idx === activePhaseIndex;
               return (
-                <button
+                <motion.button
                   key={p.num}
                   onClick={() => setActivePhaseIndex(idx)}
+                  whileHover={{ y: -4, scale: 1.02, transition: { duration: 0.2 } }}
+                  whileTap={{ scale: 0.98 }}
                   className={`text-left p-4 rounded-xl border transition-all cursor-pointer relative ${
                     isActive
-                      ? 'bg-[#10243C] text-white border-[#B69A6B] shadow-xl'
-                      : 'bg-[#FFFCF8] text-[#10243C] border-[#E8DFD2] hover:border-[#B69A6B]/50 shadow-sm'
+                      ? 'bg-[#10243C] text-white border-[#B69A6B] shadow-xl shadow-[#10243C]/20 ring-1 ring-[#B69A6B]'
+                      : 'bg-[#FFFCF8] text-[#10243C] border-[#E8DFD2] hover:border-[#B69A6B]/50 hover:shadow-md shadow-sm'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-2">
@@ -128,8 +130,8 @@ export const Approach: React.FC = () => {
                     }`}>
                       {p.num}
                     </span>
-                    <span className={`w-2 h-2 rounded-full ${
-                      isActive ? 'bg-[#B69A6B]' : 'bg-[#E8DFD2]'
+                    <span className={`w-2.5 h-2.5 rounded-full transition-transform ${
+                      isActive ? 'bg-[#B69A6B] scale-125' : 'bg-[#E8DFD2]'
                     }`} />
                   </div>
                   <div className="font-heading font-bold text-sm sm:text-base leading-tight mb-1">
@@ -140,7 +142,7 @@ export const Approach: React.FC = () => {
                   }`}>
                     {p.shortDesc}
                   </div>
-                </button>
+                </motion.button>
               );
             })}
           </div>

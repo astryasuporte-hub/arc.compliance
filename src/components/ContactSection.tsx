@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Mail, 
   Phone, 
   MapPin, 
   Instagram, 
-  Send, 
+  Linkedin,
   Check, 
   Copy, 
   ExternalLink, 
   RefreshCw,
   ShieldCheck,
-  AlertCircle
+  AlertCircle,
+  Building,
+  User,
+  Briefcase
 } from 'lucide-react';
-import { sanitizeInput, isValidEmail, isValidPhone, buildSafeMailtoUrl } from '../utils/security.ts';
+import { sanitizeInput, isValidEmail, buildSafeMailtoUrl } from '../utils/security.ts';
 
 interface ContactSectionProps {
   initialSolution?: string;
@@ -21,6 +24,14 @@ interface ContactSectionProps {
 
 const ARC_EMAIL = 'contato@arccompliance.com.br';
 const INSTAGRAM_URL = 'https://www.instagram.com/arc.compliance?xtok=MWo2cHlmdmwwcTVwdQ==';
+const LINKEDIN_URL = 'https://www.linkedin.com/company/arc-compliance/';
+
+interface FormErrors {
+  name?: string;
+  email?: string;
+  phone?: string;
+  company?: string;
+}
 
 export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution = '' }) => {
   const [formData, setFormData] = useState({
@@ -33,7 +44,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
     message: '',
   });
 
-  const [validationError, setValidationError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [submitAttempted, setSubmitAttempted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [generatedMailtoUrl, setGeneratedMailtoUrl] = useState('');
@@ -48,9 +61,92 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
     }
   }, [initialSolution]);
 
+  // Phone mask helper for Brazilian phone numbers: (XX) XXXXX-XXXX or (XX) XXXX-XXXX
+  const formatPhoneNumber = (value: string) => {
+    const numbers = value.replace(/\D/g, '').slice(0, 11);
+    if (numbers.length <= 2) {
+      return numbers.length > 0 ? `(${numbers}` : '';
+    }
+    if (numbers.length <= 6) {
+      return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
+    }
+    if (numbers.length <= 10) {
+      return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 6)}-${numbers.slice(6)}`;
+    }
+    return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7, 11)}`;
+  };
+
+  const validateField = (field: string, value: string): string | undefined => {
+    const clean = value.trim();
+
+    if (field === 'name') {
+      if (!clean) return 'Por favor, informe seu nome completo.';
+      if (clean.length < 3) return 'O nome deve ter no mínimo 3 caracteres.';
+      if (!clean.includes(' ')) return 'Por favor, informe seu nome e sobrenome.';
+    }
+
+    if (field === 'email') {
+      if (!clean) return 'Por favor, informe seu e-mail corporativo.';
+      if (!isValidEmail(clean)) return 'Informe um e-mail corporativo válido (ex: seu.nome@empresa.com.br).';
+    }
+
+    if (field === 'phone') {
+      const digits = value.replace(/\D/g, '');
+      if (!digits) return 'Por favor, informe seu telefone com DDD.';
+      if (digits.length < 10) return 'Número incompleto. Digite o DDD + número (ex: 11 99999-9999).';
+    }
+
+    return undefined;
+  };
+
+  const validateAll = () => {
+    const newErrors: FormErrors = {};
+    const nameErr = validateField('name', formData.name);
+    const emailErr = validateField('email', formData.email);
+    const phoneErr = validateField('phone', formData.phone);
+
+    if (nameErr) newErrors.name = nameErr;
+    if (emailErr) newErrors.email = emailErr;
+    if (phoneErr) newErrors.phone = phoneErr;
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (field: string, value: string) => {
+    let finalValue = value;
+    if (field === 'phone') {
+      finalValue = formatPhoneNumber(value);
+    }
+
+    setFormData((prev) => ({ ...prev, [field]: finalValue }));
+
+    // If field has been touched or submit was attempted, update error immediately
+    if (touched[field] || submitAttempted) {
+      const fieldError = validateField(field, finalValue);
+      setErrors((prev) => ({ ...prev, [field]: fieldError }));
+    }
+  };
+
+  const handleBlur = (field: string) => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+    const fieldError = validateField(field, formData[field as keyof typeof formData] || '');
+    setErrors((prev) => ({ ...prev, [field]: fieldError }));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setValidationError(null);
+    setSubmitAttempted(true);
+    setTouched({ name: true, email: true, phone: true });
+
+    const isValid = validateAll();
+    if (!isValid) {
+      // Focus on first invalid field
+      const firstErrorKey = Object.keys(errors)[0] || 'name';
+      const el = document.getElementById(`input-${firstErrorKey}`);
+      if (el) el.focus();
+      return;
+    }
 
     // Sanitize all inputs against XSS and injection
     const cleanName = sanitizeInput(formData.name, 100);
@@ -61,21 +157,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
     const cleanSolution = sanitizeInput(formData.solution, 120);
     const cleanMessage = sanitizeInput(formData.message, 1500);
 
-    // Validation
-    if (!cleanName || cleanName.length < 2) {
-      setValidationError('Por favor, informe seu nome completo.');
-      return;
-    }
-    if (!isValidEmail(cleanEmail)) {
-      setValidationError('Por favor, informe um e-mail corporativo válido.');
-      return;
-    }
-    if (!isValidPhone(cleanPhone)) {
-      setValidationError('Por favor, informe um telefone de contato válido com DDD.');
-      return;
-    }
-
-    // Trigger subtle success confirmation animation on the button
     setIsSubmitting(true);
 
     const subject = `Solicitação de Proposta | ARC Compliance - ${cleanCompany || cleanName}`;
@@ -129,16 +210,27 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
   const handleReset = () => {
     setIsSubmitted(false);
     setIsSubmitting(false);
+    setSubmitAttempted(false);
+    setTouched({});
+    setErrors({});
     setCopied(false);
     setEmailClicked(false);
   };
+
+  const hasErrors = Object.keys(errors).some((k) => !!errors[k as keyof FormErrors]);
 
   return (
     <section id="contato" className="py-20 lg:py-28 bg-[#FFFCF8] text-[#10243C] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        {/* Section Header with Subtle Scroll Entry Animation */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-3xl mx-auto text-center mb-14 sm:mb-16"
+        >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#10243C]/5 border border-[#10243C]/15 text-xs font-bold text-[#B69A6B] uppercase tracking-wider mb-4 font-heading">
             <ShieldCheck className="w-3.5 h-3.5 text-[#B69A6B]" />
             <span>Atendimento Executivo & Propostas</span>
@@ -149,16 +241,22 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
             <span className="text-[#B69A6B]">sua organização?</span>
           </h2>
 
-          <p className="text-base text-[#414850] font-normal leading-relaxed">
-            Preencha os dados abaixo para receber uma proposta personalizada diretamente por e-mail de nossa equipe de consultores.
+          <p className="text-sm sm:text-base text-[#414850] font-normal leading-relaxed max-w-2xl mx-auto">
+            Preencha os dados abaixo para receber uma proposta personalizada diretamente por e-mail de nossa equipe de consultores especialistas.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           
-          {/* Left Column: Direct Channels (Cleaned per user feedback) */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="bg-[#F7F3EC] p-8 rounded-2xl border border-[#E8DFD2] shadow-sm space-y-6">
+          {/* Left Column: Direct Channels with Scroll Entry Animation */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-5 space-y-6"
+          >
+            <div className="bg-[#F7F3EC] p-6 sm:p-8 rounded-2xl border border-[#E8DFD2] shadow-sm space-y-6">
               <h3 className="font-heading text-xl font-bold text-[#10243C] border-b border-[#E8DFD2] pb-4">
                 Canais Diretos de Atendimento
               </h3>
@@ -175,7 +273,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                     </span>
                     <a
                       href={`mailto:${ARC_EMAIL}`}
-                      className="text-base font-bold text-[#10243C] hover:text-[#B69A6B] transition-colors block mt-0.5"
+                      className="text-base font-bold text-[#10243C] hover:text-[#B69A6B] transition-colors block mt-0.5 break-all"
                     >
                       {ARC_EMAIL}
                     </a>
@@ -220,6 +318,26 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                   </div>
                 </div>
 
+                {/* LinkedIn */}
+                <div className="flex items-start gap-4">
+                  <div className="p-3 rounded-xl bg-[#10243C] text-[#B69A6B] shrink-0 shadow-sm">
+                    <Linkedin className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#B69A6B] block font-heading">
+                      LinkedIn Corporativo
+                    </span>
+                    <a
+                      href={LINKEDIN_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-base font-bold text-[#10243C] hover:text-[#B69A6B] transition-colors block mt-0.5"
+                    >
+                      ARC Compliance & Advisory
+                    </a>
+                  </div>
+                </div>
+
                 {/* Localização */}
                 <div className="flex items-start gap-4">
                   <div className="p-3 rounded-xl bg-[#10243C] text-[#B69A6B] shrink-0 shadow-sm">
@@ -237,16 +355,22 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
               </div>
 
             </div>
-          </div>
+          </motion.div>
 
-          {/* Right Column: Interactive Proposal Form via Email */}
-          <div className="lg:col-span-7">
-            <div className="bg-[#FFFFFF] p-8 sm:p-10 rounded-2xl border border-[#E8DFD2] shadow-xl">
+          {/* Right Column: Interactive Proposal Form via Email with Scroll Entry Animation */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-7"
+          >
+            <div className="bg-[#FFFFFF] p-6 sm:p-10 rounded-2xl border border-[#E8DFD2] shadow-xl">
               
               {!isSubmitted ? (
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form onSubmit={handleSubmit} noValidate className="space-y-5">
                   <div className="flex items-center justify-between border-b border-[#E8DFD2] pb-4 mb-2">
-                    <h3 className="font-heading text-xl font-bold text-[#10243C]">
+                    <h3 className="font-heading text-lg sm:text-xl font-bold text-[#10243C]">
                       Solicitar Proposta por E-mail
                     </h3>
                     <span className="text-[11px] font-medium text-[#414850]">
@@ -254,98 +378,180 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                     </span>
                   </div>
 
-                  {validationError && (
-                    <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
-                      <AlertCircle className="w-4 h-4 shrink-0" />
-                      <span>{validationError}</span>
-                    </div>
-                  )}
+                  {/* General error alert banner when submission attempted with errors */}
+                  <AnimatePresence>
+                    {submitAttempted && hasErrors && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2.5 overflow-hidden"
+                      >
+                        <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                        <span>Por favor, corrija os campos destacados em vermelho abaixo antes de prosseguir.</span>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {/* Nome Completo */}
                     <div>
-                      <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5 font-heading">
-                        Nome Completo *
-                      </label>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label htmlFor="input-name" className="text-xs font-bold uppercase tracking-wider text-[#10243C] flex items-center gap-1 font-heading">
+                          <User className="w-3.5 h-3.5 text-[#B69A6B]" />
+                          <span>Nome Completo *</span>
+                        </label>
+                        {touched.name && !errors.name && formData.name.length >= 3 && (
+                          <span className="text-emerald-600 text-[11px] flex items-center gap-1 font-semibold">
+                            <Check className="w-3.5 h-3.5" /> Correto
+                          </span>
+                        )}
+                      </div>
                       <input
+                        id="input-name"
                         type="text"
-                        required
                         maxLength={100}
-                        placeholder="Ex: Carlos Eduardo"
+                        placeholder="Ex: Carlos Eduardo Silva"
                         value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-[#F7F3EC] border border-[#E8DFD2] text-xs text-[#10243C] focus:outline-none focus:border-[#B69A6B]"
+                        onChange={(e) => handleChange('name', e.target.value)}
+                        onBlur={() => handleBlur('name')}
+                        className={`w-full px-4 py-3.5 rounded-xl text-base sm:text-xs transition-all focus:outline-none ${
+                          touched.name && errors.name
+                            ? 'bg-rose-50/50 border-2 border-rose-400 text-rose-950 focus:border-rose-500 focus:ring-2 focus:ring-rose-200'
+                            : touched.name && !errors.name && formData.name.length >= 3
+                            ? 'bg-[#F7F3EC] border border-emerald-400 text-[#10243C] focus:border-[#B69A6B] focus:ring-2 focus:ring-[#B69A6B]/20'
+                            : 'bg-[#F7F3EC] border border-[#E8DFD2] text-[#10243C] focus:border-[#B69A6B] focus:ring-2 focus:ring-[#B69A6B]/20'
+                        }`}
                       />
+                      {touched.name && errors.name && (
+                        <p className="mt-1.5 text-xs text-rose-600 flex items-center gap-1 font-medium">
+                          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                          <span>{errors.name}</span>
+                        </p>
+                      )}
                     </div>
 
+                    {/* Empresa */}
                     <div>
-                      <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5 font-heading">
-                        Empresa
+                      <label htmlFor="input-company" className="text-xs font-bold uppercase tracking-wider text-[#10243C] flex items-center gap-1 mb-1.5 font-heading">
+                        <Building className="w-3.5 h-3.5 text-[#B69A6B]" />
+                        <span>Empresa</span>
                       </label>
                       <input
+                        id="input-company"
                         type="text"
                         maxLength={100}
                         placeholder="Nome da sua empresa"
                         value={formData.company}
-                        onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-[#F7F3EC] border border-[#E8DFD2] text-xs text-[#10243C] focus:outline-none focus:border-[#B69A6B]"
+                        onChange={(e) => handleChange('company', e.target.value)}
+                        className="w-full px-4 py-3.5 rounded-xl bg-[#F7F3EC] border border-[#E8DFD2] text-base sm:text-xs text-[#10243C] focus:outline-none focus:border-[#B69A6B] focus:ring-2 focus:ring-[#B69A6B]/20 transition-all"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {/* Cargo / Função */}
                     <div>
-                      <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5 font-heading">
-                        Cargo / Função
+                      <label htmlFor="input-role" className="text-xs font-bold uppercase tracking-wider text-[#10243C] flex items-center gap-1 mb-1.5 font-heading">
+                        <Briefcase className="w-3.5 h-3.5 text-[#B69A6B]" />
+                        <span>Cargo / Função</span>
                       </label>
                       <input
+                        id="input-role"
                         type="text"
                         maxLength={100}
                         placeholder="Ex: Diretor, Sócio, Gerente"
                         value={formData.role}
-                        onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-[#F7F3EC] border border-[#E8DFD2] text-xs text-[#10243C] focus:outline-none focus:border-[#B69A6B]"
+                        onChange={(e) => handleChange('role', e.target.value)}
+                        className="w-full px-4 py-3.5 rounded-xl bg-[#F7F3EC] border border-[#E8DFD2] text-base sm:text-xs text-[#10243C] focus:outline-none focus:border-[#B69A6B] focus:ring-2 focus:ring-[#B69A6B]/20 transition-all"
                       />
                     </div>
 
+                    {/* Telefone / WhatsApp */}
                     <div>
-                      <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5 font-heading">
-                        Telefone de Contato *
-                      </label>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label htmlFor="input-phone" className="text-xs font-bold uppercase tracking-wider text-[#10243C] flex items-center gap-1 font-heading">
+                          <Phone className="w-3.5 h-3.5 text-[#B69A6B]" />
+                          <span>Telefone com DDD *</span>
+                        </label>
+                        {touched.phone && !errors.phone && formData.phone.length >= 14 && (
+                          <span className="text-emerald-600 text-[11px] flex items-center gap-1 font-semibold">
+                            <Check className="w-3.5 h-3.5" /> Válido
+                          </span>
+                        )}
+                      </div>
                       <input
+                        id="input-phone"
                         type="tel"
-                        required
-                        maxLength={25}
-                        placeholder="Ex: (11) 99999-9999"
+                        maxLength={16}
+                        placeholder="(11) 99999-9999"
                         value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-[#F7F3EC] border border-[#E8DFD2] text-xs text-[#10243C] focus:outline-none focus:border-[#B69A6B]"
+                        onChange={(e) => handleChange('phone', e.target.value)}
+                        onBlur={() => handleBlur('phone')}
+                        className={`w-full px-4 py-3.5 rounded-xl text-base sm:text-xs transition-all focus:outline-none ${
+                          touched.phone && errors.phone
+                            ? 'bg-rose-50/50 border-2 border-rose-400 text-rose-950 focus:border-rose-500 focus:ring-2 focus:ring-rose-200'
+                            : touched.phone && !errors.phone && formData.phone.length >= 14
+                            ? 'bg-[#F7F3EC] border border-emerald-400 text-[#10243C] focus:border-[#B69A6B] focus:ring-2 focus:ring-[#B69A6B]/20'
+                            : 'bg-[#F7F3EC] border border-[#E8DFD2] text-[#10243C] focus:border-[#B69A6B] focus:ring-2 focus:ring-[#B69A6B]/20'
+                        }`}
                       />
+                      {touched.phone && errors.phone && (
+                        <p className="mt-1.5 text-xs text-rose-600 flex items-center gap-1 font-medium">
+                          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                          <span>{errors.phone}</span>
+                        </p>
+                      )}
                     </div>
                   </div>
 
+                  {/* E-mail Corporativo */}
                   <div>
-                    <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5 font-heading">
-                      E-mail Corporativo *
-                    </label>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label htmlFor="input-email" className="text-xs font-bold uppercase tracking-wider text-[#10243C] flex items-center gap-1 font-heading">
+                        <Mail className="w-3.5 h-3.5 text-[#B69A6B]" />
+                        <span>E-mail Corporativo *</span>
+                      </label>
+                      {touched.email && !errors.email && isValidEmail(formData.email) && (
+                        <span className="text-emerald-600 text-[11px] flex items-center gap-1 font-semibold">
+                          <Check className="w-3.5 h-3.5" /> Válido
+                        </span>
+                      )}
+                    </div>
                     <input
+                      id="input-email"
                       type="email"
-                      required
                       maxLength={150}
                       placeholder="seu.nome@empresa.com.br"
                       value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-[#F7F3EC] border border-[#E8DFD2] text-xs text-[#10243C] focus:outline-none focus:border-[#B69A6B]"
+                      onChange={(e) => handleChange('email', e.target.value)}
+                      onBlur={() => handleBlur('email')}
+                      className={`w-full px-4 py-3.5 rounded-xl text-base sm:text-xs transition-all focus:outline-none ${
+                        touched.email && errors.email
+                          ? 'bg-rose-50/50 border-2 border-rose-400 text-rose-950 focus:border-rose-500 focus:ring-2 focus:ring-rose-200'
+                          : touched.email && !errors.email && isValidEmail(formData.email)
+                          ? 'bg-[#F7F3EC] border border-emerald-400 text-[#10243C] focus:border-[#B69A6B] focus:ring-2 focus:ring-[#B69A6B]/20'
+                          : 'bg-[#F7F3EC] border border-[#E8DFD2] text-[#10243C] focus:border-[#B69A6B] focus:ring-2 focus:ring-[#B69A6B]/20'
+                      }`}
                     />
+                    {touched.email && errors.email && (
+                      <p className="mt-1.5 text-xs text-rose-600 flex items-center gap-1 font-medium">
+                        <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                        <span>{errors.email}</span>
+                      </p>
+                    )}
                   </div>
 
+                  {/* Solução / Interesse Principal */}
                   <div>
-                    <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5 font-heading">
+                    <label htmlFor="select-solution" className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5 font-heading">
                       Solução / Interesse Principal
                     </label>
                     <select
+                      id="select-solution"
                       value={formData.solution}
-                      onChange={(e) => setFormData({ ...formData, solution: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-[#F7F3EC] border border-[#E8DFD2] text-xs text-[#10243C] focus:outline-none focus:border-[#B69A6B] cursor-pointer"
+                      onChange={(e) => handleChange('solution', e.target.value)}
+                      className="w-full px-4 py-3.5 rounded-xl bg-[#F7F3EC] border border-[#E8DFD2] text-base sm:text-xs text-[#10243C] focus:outline-none focus:border-[#B69A6B] focus:ring-2 focus:ring-[#B69A6B]/20 cursor-pointer transition-all"
                     >
                       <option value="Diagnóstico de Integridade & Conformidade">Diagnóstico de Integridade & Conformidade</option>
                       <option value="Código de Ética & Conduta Personalizado">Código de Ética & Conduta Personalizado</option>
@@ -356,25 +562,28 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                     </select>
                   </div>
 
+                  {/* Detalhes da Necessidade */}
                   <div>
-                    <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5 font-heading">
-                      Detalhes da Necessidade / Mensagem
+                    <label htmlFor="textarea-message" className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5 font-heading">
+                      Detalhes da Necessidade / Mensagem (Opcional)
                     </label>
                     <textarea
+                      id="textarea-message"
                       rows={3}
                       maxLength={1500}
                       placeholder="Descreva brevemente o momento da empresa, número aproximado de colaboradores ou prazos pretendidos..."
                       value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-[#F7F3EC] border border-[#E8DFD2] text-xs text-[#10243C] focus:outline-none focus:border-[#B69A6B] resize-none"
+                      onChange={(e) => handleChange('message', e.target.value)}
+                      className="w-full px-4 py-3.5 rounded-xl bg-[#F7F3EC] border border-[#E8DFD2] text-base sm:text-xs text-[#10243C] focus:outline-none focus:border-[#B69A6B] focus:ring-2 focus:ring-[#B69A6B]/20 resize-none transition-all"
                     />
                   </div>
 
+                  {/* Submit Button with Clean Mail Icon and Micro-interaction */}
                   <div className="pt-2">
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full px-5 sm:px-8 py-4 rounded-xl bg-[#B69A6B] hover:bg-[#C8AE7D] active:scale-[0.99] text-[#10243C] text-xs sm:text-sm font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-3 shadow-xl shadow-[#B69A6B]/25 cursor-pointer disabled:opacity-95 font-heading"
+                      className="w-full min-h-[52px] px-6 py-4 rounded-xl bg-[#B69A6B] hover:bg-[#C8AE7D] active:scale-[0.99] text-[#10243C] text-xs sm:text-sm font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-3 shadow-xl shadow-[#B69A6B]/25 cursor-pointer disabled:opacity-95 font-heading"
                     >
                       {isSubmitting ? (
                         <motion.span
@@ -398,7 +607,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                               transition={{ duration: 0.35, ease: 'easeOut' }}
                             />
                           </motion.svg>
-                          <span>Solicitação Preparada! Abrindo E-mail...</span>
+                          <span>Validado com Sucesso! Abrindo E-mail...</span>
                         </motion.span>
                       ) : (
                         <span className="inline-flex items-center justify-center gap-2.5 text-center">
@@ -485,7 +694,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                       </button>
                     </div>
 
-                    <pre className="p-4 rounded-xl bg-[#F7F3EC] border border-[#E8DFD2] text-xs text-[#10243C] font-mono whitespace-pre-wrap leading-relaxed overflow-x-auto shadow-inner">
+                    <pre className="p-4 rounded-xl bg-[#F7F3EC] border border-[#E8DFD2] text-xs text-[#10243C] font-mono whitespace-pre-wrap break-all leading-relaxed overflow-x-hidden max-w-full shadow-inner">
                       {`Destinatário: ${ARC_EMAIL}\nAssunto: ${emailSubject}\n\n${formattedMessagePreview}`}
                     </pre>
                   </div>
@@ -552,7 +761,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
               )}
 
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>

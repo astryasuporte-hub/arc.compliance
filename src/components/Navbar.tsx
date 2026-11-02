@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowUpRight, Instagram } from 'lucide-react';
+import { Menu, X, ArrowUpRight, Instagram, Linkedin } from 'lucide-react';
 
 interface NavbarProps {
   onOpenContact: () => void;
@@ -21,16 +21,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
   const navLinks = [
     { label: 'Início', href: '#inicio' },
     { label: 'Soluções', href: '#solucoes' },
-    { label: 'Metodologia', href: '#metodologia' },
     { label: 'Sobre a ARC', href: '#sobre' },
     { label: 'Contato', href: '#contato' },
   ];
 
   const INSTAGRAM_URL = 'https://www.instagram.com/arc.compliance?xtok=MWo2cHlmdmwwcTVwdQ==';
+  const LINKEDIN_URL = 'https://www.linkedin.com/company/arc-compliance/';
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 w-full max-w-full z-50 transition-all duration-300 ${
         isScrolled
           ? 'bg-[#10243C]/95 backdrop-blur-md border-b border-[#B69A6B]/20 shadow-xl py-3'
           : 'bg-[#10243C]/80 backdrop-blur-sm border-b border-white/5 py-4'
@@ -70,19 +70,31 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
           ))}
         </nav>
 
-        {/* Desktop Actions & Social */}
-        <div className="hidden lg:flex items-center gap-4 shrink-0">
-          {/* Instagram link */}
-          <a
-            href={INSTAGRAM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 rounded-lg bg-[#162D4A] border border-[#B69A6B]/25 text-[#E8DFD2] hover:text-[#B69A6B] hover:border-[#B69A6B] transition-all"
-            title="Siga a ARC no Instagram"
-            aria-label="Instagram da ARC Compliance"
-          >
-            <Instagram className="w-4 h-4" />
-          </a>
+        {/* Desktop Social links and CTA */}
+        <div className="hidden lg:flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <a
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg bg-[#162D4A] border border-[#B69A6B]/25 text-[#E8DFD2] hover:text-[#B69A6B] hover:border-[#B69A6B] transition-all"
+              title="Siga a ARC no LinkedIn"
+              aria-label="LinkedIn da ARC Compliance"
+            >
+              <Linkedin className="w-4 h-4" />
+            </a>
+
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg bg-[#162D4A] border border-[#B69A6B]/25 text-[#E8DFD2] hover:text-[#B69A6B] hover:border-[#B69A6B] transition-all"
+              title="Siga a ARC no Instagram"
+              aria-label="Instagram da ARC Compliance"
+            >
+              <Instagram className="w-4 h-4" />
+            </a>
+          </div>
 
           {/* Clean 'Entrar em Contato' CTA */}
           <button
@@ -94,40 +106,70 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
           </button>
         </div>
 
-        {/* Mobile menu hamburger */}
+        {/* Mobile menu hamburger with 44px minimum touch target */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden p-2 text-white hover:text-[#B69A6B] transition-colors cursor-pointer"
-          aria-label="Abrir menu de navegação"
+          className="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-white hover:text-[#B69A6B] active:scale-95 transition-all cursor-pointer rounded-lg focus:outline-none"
+          aria-label={mobileMenuOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação'}
         >
-          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          {mobileMenuOpen ? <X className="w-6 h-6 text-[#B69A6B]" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer with Backdrop */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#10243C] border-b border-[#B69A6B]/25 px-6 py-6 shadow-2xl flex flex-col gap-4 animate-in fade-in slide-in-from-top-2">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-sm font-medium tracking-wide text-[#F7F3EC] hover:text-[#B69A6B] transition-colors py-2.5 border-b border-white/5"
-            >
-              {link.label}
-            </a>
-          ))}
+        <>
+          <div 
+            onClick={() => setMobileMenuOpen(false)} 
+            className="fixed inset-0 top-[65px] bg-black/60 backdrop-blur-xs z-40 lg:hidden" 
+          />
+          <div className="relative z-50 lg:hidden bg-[#10243C] border-b border-[#B69A6B]/25 px-6 py-6 shadow-2xl flex flex-col gap-4 animate-in fade-in slide-in-from-top-2">
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-base font-medium tracking-wide text-[#F7F3EC] active:text-[#B69A6B] hover:text-[#B69A6B] transition-colors py-3 border-b border-white/5 flex items-center justify-between"
+              >
+                <span>{link.label}</span>
+                <span className="text-[#B69A6B] opacity-60 text-xs">&rarr;</span>
+              </a>
+            ))}
 
-          <button
-            onClick={() => {
-              setMobileMenuOpen(false);
-              onOpenContact();
-            }}
-            className="w-full py-3.5 rounded-xl bg-[#B69A6B] text-[#10243C] text-xs font-bold uppercase tracking-wider text-center mt-2 cursor-pointer shadow-md"
-          >
-            Entrar em Contato
-          </button>
-        </div>
+            {/* Social links row in mobile drawer */}
+            <div className="flex items-center justify-center gap-4 py-2 border-b border-white/5">
+              <a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-xs font-semibold text-[#E8DFD2] hover:text-[#B69A6B] py-1"
+              >
+                <Linkedin className="w-4 h-4 text-[#B69A6B]" />
+                <span>LinkedIn</span>
+              </a>
+              <span className="text-white/20">&bull;</span>
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-xs font-semibold text-[#E8DFD2] hover:text-[#B69A6B] py-1"
+              >
+                <Instagram className="w-4 h-4 text-[#B69A6B]" />
+                <span>Instagram</span>
+              </a>
+            </div>
+
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenContact();
+              }}
+              className="w-full min-h-[48px] py-3.5 rounded-xl bg-[#B69A6B] active:bg-[#C8AE7D] text-[#10243C] text-xs sm:text-sm font-bold uppercase tracking-wider text-center mt-2 cursor-pointer shadow-md font-heading"
+            >
+              Entrar em Contato
+            </button>
+          </div>
+        </>
       )}
     </header>
   );

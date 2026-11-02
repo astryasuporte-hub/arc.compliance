@@ -97,47 +97,58 @@ export const SolutionsSection: React.FC<SolutionsSectionProps> = ({ onSelectSolu
     <section id="solucoes" className="py-20 lg:py-28 bg-[#FFFCF8] text-[#10243C] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        {/* Section Header with Subtle Scroll Entry Animation */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-3xl mx-auto text-center mb-16"
+        >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#10243C]/5 border border-[#10243C]/15 text-xs font-bold text-[#B69A6B] uppercase tracking-wider mb-4 font-heading">
             <Sparkles className="w-3.5 h-3.5 text-[#B69A6B]" />
             <span>Nossas Soluções Corporativas</span>
           </div>
 
           <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-[#10243C] tracking-tight mb-5 leading-tight">
-            Consultoria sob medida para as{' '}
-            <span className="text-[#B69A6B]">reais necessidades</span> da sua empresa.
+            Consultoria sob medida para{' '}
+            <span className="text-[#B69A6B]">sua empresa.</span>
           </h2>
 
           <p className="text-base text-[#414850] font-normal leading-relaxed">
-            Panorama das soluções que desenvolvemos para fortalecer a governança, a cultura ética e a segurança jurídica da sua organização.
+            Panorama das soluções que desenvolvemos para fortalecer a governança e a cultura ética da sua organização.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Panoramic Grid (Clean, Simple, Without Prices or Modules) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+        {/* Panoramic Grid with Enhanced Card Animations */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
           {SOLUTIONS.map((solution, index) => {
             const Icon = solution.icon;
             return (
               <motion.div
                 key={solution.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-                className="bg-[#FFFFFF] rounded-2xl p-7 border border-[#E8DFD2] shadow-sm hover:shadow-xl hover:border-[#B69A6B]/50 transition-all flex flex-col justify-between group"
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.5, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -7, scale: 1.015, transition: { duration: 0.25, ease: 'easeOut' } }}
+                whileTap={{ scale: 0.99 }}
+                className="bg-[#FFFFFF] rounded-2xl p-6 sm:p-7 border border-[#E8DFD2] shadow-sm hover:shadow-2xl hover:shadow-[#B69A6B]/15 hover:border-[#B69A6B]/60 transition-all flex flex-col justify-between group cursor-pointer relative overflow-hidden"
               >
+                {/* Subtle top card glow line on hover */}
+                <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-[#B69A6B] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
                 <div>
                   <div className="flex items-center justify-between mb-5">
-                    <div className="w-12 h-12 rounded-xl bg-[#F7F3EC] group-hover:bg-[#10243C] text-[#B69A6B] group-hover:text-[#B69A6B] flex items-center justify-center transition-colors shadow-sm">
-                      <Icon className="w-6 h-6" />
+                    <div className="w-12 h-12 rounded-xl bg-[#F7F3EC] group-hover:bg-[#10243C] text-[#B69A6B] flex items-center justify-center transition-all duration-300 shadow-sm group-hover:shadow-md">
+                      <Icon className="w-6 h-6 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3" />
                     </div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#B69A6B] bg-[#F7F3EC] px-2.5 py-1 rounded-full border border-[#E8DFD2] font-heading">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#B69A6B] bg-[#F7F3EC] group-hover:bg-[#10243C]/5 px-2.5 py-1 rounded-full border border-[#E8DFD2] font-heading transition-colors">
                       {solution.category}
                     </span>
                   </div>
 
-                  <h3 className="font-heading text-xl font-bold text-[#10243C] mb-2.5 leading-snug group-hover:text-[#B69A6B] transition-colors">
+                  <h3 className="font-heading text-lg sm:text-xl font-bold text-[#10243C] mb-2.5 leading-snug group-hover:text-[#B69A6B] transition-colors">
                     {solution.title}
                   </h3>
 
@@ -151,7 +162,7 @@ export const SolutionsSection: React.FC<SolutionsSectionProps> = ({ onSelectSolu
                     </span>
                     {solution.highlights.map((h, i) => (
                       <div key={i} className="flex items-start gap-2 text-xs text-[#414850] leading-snug">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#B69A6B] shrink-0 mt-0.5" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#B69A6B] shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
                         <span>{h}</span>
                       </div>
                     ))}
@@ -161,10 +172,10 @@ export const SolutionsSection: React.FC<SolutionsSectionProps> = ({ onSelectSolu
                 <div className="pt-4 border-t border-[#E8DFD2]/60 mt-auto">
                   <button
                     onClick={() => onSelectSolution(solution.title)}
-                    className="w-full py-3 rounded-xl bg-[#F7F3EC] group-hover:bg-[#10243C] text-[#10243C] group-hover:text-[#F7F3EC] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer font-heading"
+                    className="w-full py-3.5 rounded-xl bg-[#F7F3EC] group-hover:bg-[#10243C] text-[#10243C] group-hover:text-[#F7F3EC] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer font-heading group-hover:shadow-md"
                   >
                     <span>Solicitar Proposta por E-mail</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-[#B69A6B]" />
+                    <ArrowRight className="w-3.5 h-3.5 text-[#B69A6B] transition-transform duration-200 group-hover:translate-x-1" />
                   </button>
                 </div>
               </motion.div>

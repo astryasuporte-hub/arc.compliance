@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Mail, Instagram, X } from 'lucide-react';
+import { Mail, Instagram, Linkedin, X } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const [legalModal, setLegalModal] = useState<string | null>(null);
 
   const INSTAGRAM_URL = 'https://www.instagram.com/arc.compliance?xtok=MWo2cHlmdmwwcTVwdQ==';
+  const LINKEDIN_URL = 'https://www.linkedin.com/company/arc-compliance/';
 
   return (
     <footer className="bg-[#0B1A2C] text-[#F7F3EC] pt-16 pb-12 border-t border-[#B69A6B]/20 relative">
@@ -37,7 +38,18 @@ export const Footer: React.FC = () => {
               Consultoria boutique especializada em governança corporativa, conformidade estratégica e gestão preventiva de riscos empresariais. Transformando integridade em valor tangível e segurança patrimonial para sua empresa.
             </p>
 
-            <div className="flex items-center gap-3 pt-2">
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#162D4A] hover:bg-[#1E3B61] border border-[#B69A6B]/30 text-xs font-semibold text-[#F7F3EC] hover:text-[#B69A6B] transition-all"
+                title="Acessar LinkedIn da ARC"
+              >
+                <Linkedin className="w-4 h-4 text-[#B69A6B]" />
+                <span>LinkedIn</span>
+              </a>
+
               <a
                 href={INSTAGRAM_URL}
                 target="_blank"
@@ -51,10 +63,10 @@ export const Footer: React.FC = () => {
 
               <a
                 href="mailto:contato@arccompliance.com.br"
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#B69A6B]/20 hover:bg-[#B69A6B]/30 border border-[#B69A6B]/40 text-xs font-semibold text-[#B69A6B] transition-all"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#B69A6B]/20 hover:bg-[#B69A6B]/30 border border-[#B69A6B]/40 text-xs font-semibold text-[#B69A6B] transition-all max-w-full"
               >
-                <Mail className="w-3.5 h-3.5" />
-                <span>contato@arccompliance.com.br</span>
+                <Mail className="w-3.5 h-3.5 shrink-0" />
+                <span className="break-all">contato@arccompliance.com.br</span>
               </a>
             </div>
           </div>
@@ -70,9 +82,6 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <a href="#solucoes" className="hover:text-white transition-colors">Nossas Soluções</a>
-              </li>
-              <li>
-                <a href="#metodologia" className="hover:text-white transition-colors">Metodologia</a>
               </li>
               <li>
                 <a href="#sobre" className="hover:text-white transition-colors">Sobre a ARC</a>
@@ -127,12 +136,9 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom copyright */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#8892B0]">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-center text-center gap-4 text-xs text-[#8892B0]">
           <div>
             &copy; {new Date().getFullYear()} ARC Compliance & Advisory &bull; Todos os direitos reservados.
-          </div>
-          <div className="font-heading font-medium text-[#B69A6B] text-xs uppercase tracking-wider">
-            Integridade hoje. Valor perene amanhã.
           </div>
         </div>
 

@@ -13,21 +13,21 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
   };
 
   return (
-    <section id="inicio" className="relative pt-32 pb-20 lg:pt-44 lg:pb-32 overflow-hidden bg-[#10243C]">
+    <section id="inicio" className="relative pt-28 pb-20 lg:pt-44 lg:pb-32 overflow-hidden bg-[#10243C] w-full max-w-full">
       {/* Subtle, GPU-accelerated background ambient lighting */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[#B69A6B]/10 rounded-full blur-[140px] pointer-events-none transform-gpu" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-64 sm:w-[500px] h-64 sm:h-[350px] bg-[#B69A6B]/10 rounded-full blur-[80px] sm:blur-[140px] pointer-events-none transform-gpu max-w-full" />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center w-full max-w-full">
         
         {/* Eyebrow badge */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#162D4A] border border-[#B69A6B]/30 text-[11px] sm:text-xs font-semibold text-[#B69A6B] uppercase tracking-widest mb-6 shadow-md"
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#162D4A] border border-[#B69A6B]/30 text-[10px] sm:text-xs font-semibold text-[#B69A6B] uppercase tracking-widest mb-6 shadow-md max-w-full text-center"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-[#B69A6B]" />
-          <span>Consultoria em Compliance & Governança Corporativa</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-[#B69A6B] shrink-0" />
+          <span className="truncate sm:whitespace-normal">Consultoria em Compliance & Governança Corporativa</span>
         </motion.div>
 
         {/* Hero Title */}
@@ -74,48 +74,15 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
           </button>
         </motion.div>
 
-        {/* 3 Core Value Points */}
+        {/* Refined and objective "Sem burocracia" highlight */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-8 border-t border-[#E8DFD2]/15 max-w-4xl mx-auto text-left"
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#162D4A]/70 border border-[#B69A6B]/30 text-xs text-[#E8DFD2] font-medium shadow-sm"
         >
-          <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#162D4A]/50 border border-white/5">
-            <CheckCircle2 className="w-5 h-5 text-[#B69A6B] shrink-0 mt-0.5" />
-            <div>
-              <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider block font-heading">
-                Decisões Responsáveis
-              </span>
-              <span className="text-xs text-[#A8B8CD] leading-snug block mt-0.5">
-                Segurança e respaldo estratégico para os administradores.
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#162D4A]/50 border border-white/5">
-            <ShieldCheck className="w-5 h-5 text-[#B69A6B] shrink-0 mt-0.5" />
-            <div>
-              <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider block font-heading">
-                Processos Estruturados
-              </span>
-              <span className="text-xs text-[#A8B8CD] leading-snug block mt-0.5">
-                Diretrizes claras, políticas aplicáveis e zero burocracia inútil.
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#162D4A]/50 border border-white/5">
-            <Award className="w-5 h-5 text-[#B69A6B] shrink-0 mt-0.5" />
-            <div>
-              <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider block font-heading">
-                Organizações Preparadas
-              </span>
-              <span className="text-xs text-[#A8B8CD] leading-snug block mt-0.5">
-                Cultura de conformidade alinhada ao porte e rotina do negócio.
-              </span>
-            </div>
-          </div>
+          <span className="w-1.5 h-1.5 rounded-full bg-[#B69A6B]" />
+          <span className="font-heading uppercase tracking-wider text-[11px] text-[#B69A6B] font-semibold">Sem burocracia</span>
         </motion.div>
 
       </div>
