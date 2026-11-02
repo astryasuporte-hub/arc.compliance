@@ -40,9 +40,20 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
         {/* Brand Logo with White Letters & Gold Ribbon */}
         <a href="#inicio" className="group flex items-center shrink-0">
           <img
-            src="/public/assets/aistudio/arc-logo-white.png"
+            src="/assets/aistudio/arc-logo-white.png"
             alt="ARC Compliance & Advisory"
-            className="h-10 sm:h-12 w-auto object-contain filter drop-shadow transition-transform duration-200 group-hover:scale-102"
+            width={160}
+            height={44}
+            fetchPriority="high"
+            decoding="async"
+            onError={(e) => {
+              // Fallback for different host setups
+              const target = e.currentTarget;
+              if (!target.src.includes('/public/assets/')) {
+                target.src = '/public/assets/aistudio/arc-logo-white.png';
+              }
+            }}
+            className="h-9 sm:h-11 w-auto object-contain filter drop-shadow transition-transform duration-200 group-hover:scale-102"
           />
         </a>
 

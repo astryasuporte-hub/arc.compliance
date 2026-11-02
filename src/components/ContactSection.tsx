@@ -374,16 +374,16 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full py-4 rounded-xl bg-[#B69A6B] hover:bg-[#C8AE7D] text-[#10243C] text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-xl shadow-[#B69A6B]/25 cursor-pointer disabled:opacity-95 overflow-hidden font-heading"
+                      className="w-full px-5 sm:px-8 py-4 rounded-xl bg-[#B69A6B] hover:bg-[#C8AE7D] active:scale-[0.99] text-[#10243C] text-xs sm:text-sm font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-3 shadow-xl shadow-[#B69A6B]/25 cursor-pointer disabled:opacity-95 font-heading"
                     >
                       {isSubmitting ? (
                         <motion.span
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
-                          className="inline-flex items-center gap-2"
+                          className="inline-flex items-center justify-center gap-2.5 text-center"
                         >
                           <motion.svg
-                            className="w-4 h-4 text-[#10243C]"
+                            className="w-4 h-4 text-[#10243C] shrink-0"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
@@ -401,10 +401,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                           <span>Solicitação Preparada! Abrindo E-mail...</span>
                         </motion.span>
                       ) : (
-                        <>
-                          <Mail className="w-4 h-4" />
+                        <span className="inline-flex items-center justify-center gap-2.5 text-center">
+                          <span className="w-6 h-6 rounded-lg bg-[#10243C]/10 flex items-center justify-center shrink-0">
+                            <Mail className="w-3.5 h-3.5 text-[#10243C]" />
+                          </span>
                           <span>Enviar Solicitação de Proposta por E-mail</span>
-                        </>
+                        </span>
                       )}
                     </button>
                     <span className="text-[11px] text-[#414850] text-center block mt-2">

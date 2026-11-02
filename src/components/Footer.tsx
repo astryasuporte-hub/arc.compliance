@@ -17,9 +17,19 @@ export const Footer: React.FC = () => {
           <div className="lg:col-span-6 space-y-5">
             <div className="flex items-center">
               <img
-                src="/public/assets/aistudio/arc-logo-white.png"
+                src="/assets/aistudio/arc-logo-white.png"
                 alt="ARC Compliance & Advisory"
-                className="h-12 w-auto object-contain filter drop-shadow"
+                width={160}
+                height={44}
+                loading="lazy"
+                decoding="async"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.includes('/public/assets/')) {
+                    target.src = '/public/assets/aistudio/arc-logo-white.png';
+                  }
+                }}
+                className="h-11 w-auto object-contain filter drop-shadow"
               />
             </div>
 

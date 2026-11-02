@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Target, Zap, Award, ArrowRight, Lock, CheckCircle2, FileText } from 'lucide-react';
+import { Target, Zap, Award, ArrowRight, ShieldCheck, Lock, CheckCircle2 } from 'lucide-react';
 
 interface DifferentiatorsSectionProps {
   onOpenContact: () => void;
@@ -28,37 +28,14 @@ export const DifferentiatorsSection: React.FC<DifferentiatorsSectionProps> = ({ 
           </p>
         </div>
 
-        {/* 4 Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        {/* 3 Cards Grid (Removed circled Blindagem Decisória dos Sócios card) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="bg-[#FFFCF8] rounded-2xl p-7 border border-[#E8DFD2] shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
-          >
-            <div>
-              <div className="w-12 h-12 rounded-xl bg-[#10243C] text-[#B69A6B] flex items-center justify-center mb-5">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
-              <h3 className="font-heading text-lg font-bold text-[#10243C] mb-2 leading-snug">
-                Blindagem Decisória dos Sócios
-              </h3>
-              <p className="text-xs text-[#414850] leading-relaxed">
-                Protegemos o patrimônio pessoal de administradores e fundadores, estabelecendo defesas jurídicas sólidas perante leis anticorrupção.
-              </p>
-            </div>
-            <div className="pt-4 border-t border-[#E8DFD2] text-[11px] font-semibold text-[#B69A6B] mt-4 font-heading">
-              Segurança Patrimonial &bull; C-Level
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.4 }}
             className="bg-[#FFFCF8] rounded-2xl p-7 border border-[#E8DFD2] shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
           >
             <div>
@@ -78,10 +55,10 @@ export const DifferentiatorsSection: React.FC<DifferentiatorsSectionProps> = ({ 
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.4, delay: 0.08 }}
             className="bg-[#FFFCF8] rounded-2xl p-7 border border-[#E8DFD2] shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
           >
             <div>
@@ -101,10 +78,10 @@ export const DifferentiatorsSection: React.FC<DifferentiatorsSectionProps> = ({ 
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
+            transition={{ duration: 0.4, delay: 0.16 }}
             className="bg-[#FFFCF8] rounded-2xl p-7 border border-[#E8DFD2] shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
           >
             <div>
@@ -125,7 +102,7 @@ export const DifferentiatorsSection: React.FC<DifferentiatorsSectionProps> = ({ 
 
         </div>
 
-        {/* Institutional Assurance Banner (Authentic Commitments, No Fake Numbers) */}
+        {/* Institutional Assurance Banner (Removed circled Foco em Negócios card) */}
         <div className="bg-[#10243C] rounded-3xl p-8 sm:p-12 text-white shadow-2xl relative overflow-hidden border border-[#B69A6B]/20">
           <div className="absolute top-0 right-0 w-80 h-80 bg-[#B69A6B]/15 rounded-full blur-[90px] pointer-events-none" />
 
@@ -139,11 +116,11 @@ export const DifferentiatorsSection: React.FC<DifferentiatorsSectionProps> = ({ 
               </h3>
             </div>
             <span className="text-xs text-[#E8DFD2]/70 max-w-sm">
-              Metodologia estruturada para proteger o patrimônio dos sócios e gerar valor duradouro.
+              Metodologia estruturada para proteger o negócio e gerar valor duradouro.
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
             <div className="p-5 rounded-2xl bg-[#162D4A] border border-white/10 hover:border-[#B69A6B]/40 transition-colors">
               <div className="w-10 h-10 rounded-lg bg-[#B69A6B]/20 text-[#B69A6B] flex items-center justify-center mb-4">
                 <ShieldCheck className="w-5 h-5" />
@@ -165,18 +142,6 @@ export const DifferentiatorsSection: React.FC<DifferentiatorsSectionProps> = ({ 
               </h4>
               <p className="text-xs text-[#E8DFD2]/80 leading-relaxed">
                 Todas as análises, reuniões e documentos são resguardados sob Termo de Confidencialidade (NDA) formal.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-[#162D4A] border border-white/10 hover:border-[#B69A6B]/40 transition-colors">
-              <div className="w-10 h-10 rounded-lg bg-[#B69A6B]/20 text-[#B69A6B] flex items-center justify-center mb-4">
-                <Target className="w-5 h-5" />
-              </div>
-              <h4 className="font-heading text-sm font-bold text-white mb-1.5">
-                Foco em Negócios
-              </h4>
-              <p className="text-xs text-[#E8DFD2]/80 leading-relaxed">
-                Compliance desenhado como acelerador de vendas B2B e credenciamento em concorrências internacionais.
               </p>
             </div>
 
@@ -211,4 +176,3 @@ export const DifferentiatorsSection: React.FC<DifferentiatorsSectionProps> = ({ 
     </section>
   );
 };
-

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, ShieldCheck, CheckCircle2, Lock, FileCheck } from 'lucide-react';
+import { ArrowRight, ShieldCheck, CheckCircle2, Award } from 'lucide-react';
 
 interface HeroProps {
   onOpenContact: () => void;
@@ -13,228 +13,111 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
   };
 
   return (
-    <section id="inicio" className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden bg-[#10243C]">
-      {/* Background ambient lighting matching brand colors */}
-      <div className="absolute top-1/4 -left-20 w-[500px] h-[500px] bg-[#B69A6B]/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute top-1/3 -right-20 w-[600px] h-[600px] bg-[#162D4A]/60 rounded-full blur-[160px] pointer-events-none" />
+    <section id="inicio" className="relative pt-32 pb-20 lg:pt-44 lg:pb-32 overflow-hidden bg-[#10243C]">
+      {/* Subtle, GPU-accelerated background ambient lighting */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[#B69A6B]/10 rounded-full blur-[140px] pointer-events-none transform-gpu" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
-          
-          {/* Left Column: Modern, Objective Value Proposition */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-7 flex flex-col justify-center"
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        
+        {/* Eyebrow badge */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#162D4A] border border-[#B69A6B]/30 text-[11px] sm:text-xs font-semibold text-[#B69A6B] uppercase tracking-widest mb-6 shadow-md"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-[#B69A6B]" />
+          <span>Consultoria em Compliance & Governança Corporativa</span>
+        </motion.div>
+
+        {/* Hero Title */}
+        <motion.h1
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.05 }}
+          className="font-heading text-3xl sm:text-5xl lg:text-6xl text-white font-bold leading-[1.15] tracking-tight mb-6 max-w-4xl mx-auto"
+        >
+          Governança sólida começa com{' '}
+          <span className="text-[#B69A6B]">integridade.</span>
+        </motion.h1>
+
+        {/* Hero Description */}
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="text-base sm:text-lg lg:text-xl text-[#E8DFD2]/90 font-normal leading-relaxed mb-10 max-w-3xl mx-auto"
+        >
+          Oferecemos consultoria especializada em Compliance, ética e gestão de riscos, contribuindo para decisões mais responsáveis, processos estruturados e organizações mais preparadas.
+        </motion.p>
+
+        {/* Action CTAs */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
+        >
+          <button
+            onClick={onOpenContact}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-[#B69A6B] text-[#10243C] text-xs sm:text-sm font-bold uppercase tracking-wider hover:bg-[#C8AE7D] transition-all transform hover:-translate-y-0.5 shadow-xl shadow-[#B69A6B]/25 cursor-pointer font-heading"
           >
-            {/* Elegant Sub-Header / Eyebrow */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#162D4A] border border-[#B69A6B]/30 text-xs font-semibold text-[#B69A6B] uppercase tracking-widest mb-6 w-fit shadow-md">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#B69A6B]" />
-              <span>Consultoria em Compliance & Governança Corporativa</span>
-            </div>
+            <span>Entrar em Contato</span>
+            <ArrowRight className="w-4 h-4 text-[#10243C]" />
+          </button>
 
-            {/* Inspiring, Modern & Objective Headline */}
-            <h1 className="font-heading text-3xl sm:text-5xl lg:text-[52px] text-white font-bold leading-[1.14] tracking-tight mb-6">
-              Integridade estratégica que{' '}
-              <span className="text-[#B69A6B]">blinda sua empresa</span>{' '}
-              e impulsiona novos negócios.
-            </h1>
-
-            {/* Objective Narrative */}
-            <p className="text-base sm:text-lg text-[#E8DFD2]/90 font-normal leading-relaxed mb-8 max-w-2xl">
-              Desenvolvemos programas de compliance práticos, eficientes e sem burocracia inútil. Protegemos a tomada de decisão da diretoria, mitigamos riscos operacionais e fortalecemos a governança da sua empresa com diretrizes claras e sustentáveis.
-            </p>
-
-            {/* Clean CTAs: 'Entrar em Contato' & 'Conhecer Soluções' */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-10">
-              <button
-                onClick={onOpenContact}
-                className="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-xl bg-[#B69A6B] text-[#10243C] text-xs font-bold uppercase tracking-wider hover:bg-[#C8AE7D] transition-all transform hover:-translate-y-0.5 shadow-xl shadow-[#B69A6B]/25 cursor-pointer"
-              >
-                <span>Entrar em Contato</span>
-                <ArrowRight className="w-4 h-4 text-[#10243C]" />
-              </button>
-
-              <button
-                onClick={scrollToSolutions}
-                className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-[#162D4A] border border-[#B69A6B]/40 text-[#F7F3EC] text-xs font-semibold uppercase tracking-wider hover:bg-[#1E3B61] hover:border-[#B69A6B] transition-all cursor-pointer"
-              >
-                <span>Conhecer Nossas Soluções</span>
-              </button>
-            </div>
-
-            {/* Quality Pillars */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-[#E8DFD2]/15">
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-[#B69A6B] shrink-0 mt-0.5" />
-                <div>
-                  <span className="text-xs font-bold text-white uppercase tracking-wider block font-heading">
-                    Zero Burocracia
-                  </span>
-                  <span className="text-[11px] text-[#A8B8CD] leading-snug">
-                    Políticas aplicáveis ao dia a dia
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-[#B69A6B] shrink-0 mt-0.5" />
-                <div>
-                  <span className="text-xs font-bold text-white uppercase tracking-wider block font-heading">
-                    Blindagem Decisória
-                  </span>
-                  <span className="text-[11px] text-[#A8B8CD] leading-snug">
-                    Segurança patrimonial para sócios
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-[#B69A6B] shrink-0 mt-0.5" />
-                <div>
-                  <span className="text-xs font-bold text-white uppercase tracking-wider block font-heading">
-                    Cultura Ética
-                  </span>
-                  <span className="text-[11px] text-[#A8B8CD] leading-snug">
-                    Diretrizes claras para toda a equipe
-                  </span>
-                </div>
-              </div>
-            </div>
-
-          </motion.div>
-
-          {/* Right Column: Strategic Pillars & Deliverables Card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-5 relative"
+          <button
+            onClick={scrollToSolutions}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-[#162D4A] border border-[#B69A6B]/40 text-[#F7F3EC] text-xs sm:text-sm font-semibold uppercase tracking-wider hover:bg-[#1E3B61] hover:border-[#B69A6B] transition-all cursor-pointer font-heading"
           >
-            <div className="relative bg-[#FFFCF8] rounded-2xl p-7 sm:p-8 shadow-2xl border border-[#E8DFD2] overflow-hidden text-[#10243C]">
-              
-              {/* Brand Header inside Card */}
-              <div className="flex items-center justify-between pb-5 border-b border-[#E8DFD2]">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-[#B69A6B]" />
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#10243C] font-heading">
-                    Excelência em Compliance
-                  </span>
-                </div>
-                <span className="text-[10px] font-mono font-semibold px-2.5 py-1 rounded-full bg-[#10243C] text-[#F7F3EC]">
-                  Padrão ARC
-                </span>
-              </div>
+            <span>Conhecer Nossas Soluções</span>
+          </button>
+        </motion.div>
 
-              {/* Institutional Assurance Pillars (Authentic & Objective, Zero Fake Numbers) */}
-              <div className="grid grid-cols-2 gap-3.5 py-5 border-b border-[#E8DFD2]">
-                <div className="p-3.5 rounded-xl bg-[#F7F3EC] border border-[#E8DFD2] flex flex-col justify-between">
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <ShieldCheck className="w-4 h-4 text-[#B69A6B]" />
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#10243C] font-heading">
-                      Lei 12.846/13
-                    </span>
-                  </div>
-                  <span className="text-xs font-bold text-[#10243C] block leading-tight font-heading">
-                    Conformidade Legal
-                  </span>
-                  <span className="text-[11px] text-[#414850] block mt-1 leading-snug">
-                    Blindagem contra sanções e responsabilização objetiva
-                  </span>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-[#F7F3EC] border border-[#E8DFD2] flex flex-col justify-between">
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <Lock className="w-4 h-4 text-[#B69A6B]" />
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#B69A6B] font-heading">
-                      Sigilo Estrito
-                    </span>
-                  </div>
-                  <span className="text-xs font-bold text-[#10243C] block leading-tight font-heading">
-                    Confidencialidade
-                  </span>
-                  <span className="text-[11px] text-[#414850] block mt-1 leading-snug">
-                    Resguardo ético e profissional em todas as análises
-                  </span>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-[#F7F3EC] border border-[#E8DFD2] flex flex-col justify-between">
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#B69A6B]" />
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#B69A6B] font-heading">
-                      Gestão de Riscos
-                    </span>
-                  </div>
-                  <span className="text-xs font-bold text-[#10243C] block leading-tight font-heading">
-                    Prevenção Real
-                  </span>
-                  <span className="text-[11px] text-[#414850] block mt-1 leading-snug">
-                    Mapeamento de vulnerabilidades e prioridades
-                  </span>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-[#F7F3EC] border border-[#E8DFD2] flex flex-col justify-between">
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <FileCheck className="w-4 h-4 text-[#B69A6B]" />
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#10243C] font-heading">
-                      Corpo Técnico
-                    </span>
-                  </div>
-                  <span className="text-xs font-bold text-[#10243C] block leading-tight font-heading">
-                    Consultoria Sênior
-                  </span>
-                  <span className="text-[11px] text-[#414850] block mt-1 leading-snug">
-                    Condução direta por especialistas em integridade
-                  </span>
-                </div>
-              </div>
-
-              {/* Core Corporate Deliverables */}
-              <div className="pt-5 space-y-3">
-                <div className="text-xs font-bold uppercase tracking-wider text-[#414850] mb-2 font-heading">
-                  Atuação Estratégica
-                </div>
-
-                <div className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-[#F7F3EC] transition-colors">
-                  <FileCheck className="w-4 h-4 text-[#B69A6B] shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="text-xs font-bold text-[#10243C]">
-                      Código de Ética e Conduta
-                    </h4>
-                    <p className="text-[11px] text-[#414850] leading-snug">
-                      Diretrizes claras e manuais objetivos adaptados à cultura da empresa.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-[#F7F3EC] transition-colors">
-                  <Lock className="w-4 h-4 text-[#B69A6B] shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="text-xs font-bold text-[#10243C]">
-                      Políticas e Procedimentos Internos
-                    </h4>
-                    <p className="text-[11px] text-[#414850] leading-snug">
-                      Normas para compras, relações comerciais e rotina operacional.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="pt-2">
-                  <button
-                    onClick={onOpenContact}
-                    className="w-full py-3.5 rounded-xl bg-[#10243C] hover:bg-[#162D4A] text-[#F7F3EC] text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer font-heading"
-                  >
-                    <span>Solicitar Proposta por E-mail</span>
-                    <ArrowRight className="w-4 h-4 text-[#B69A6B]" />
-                  </button>
-                </div>
-              </div>
-
+        {/* 3 Core Value Points */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-8 border-t border-[#E8DFD2]/15 max-w-4xl mx-auto text-left"
+        >
+          <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#162D4A]/50 border border-white/5">
+            <CheckCircle2 className="w-5 h-5 text-[#B69A6B] shrink-0 mt-0.5" />
+            <div>
+              <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider block font-heading">
+                Decisões Responsáveis
+              </span>
+              <span className="text-xs text-[#A8B8CD] leading-snug block mt-0.5">
+                Segurança e respaldo estratégico para os administradores.
+              </span>
             </div>
-          </motion.div>
+          </div>
 
-        </div>
+          <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#162D4A]/50 border border-white/5">
+            <ShieldCheck className="w-5 h-5 text-[#B69A6B] shrink-0 mt-0.5" />
+            <div>
+              <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider block font-heading">
+                Processos Estruturados
+              </span>
+              <span className="text-xs text-[#A8B8CD] leading-snug block mt-0.5">
+                Diretrizes claras, políticas aplicáveis e zero burocracia inútil.
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#162D4A]/50 border border-white/5">
+            <Award className="w-5 h-5 text-[#B69A6B] shrink-0 mt-0.5" />
+            <div>
+              <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider block font-heading">
+                Organizações Preparadas
+              </span>
+              <span className="text-xs text-[#A8B8CD] leading-snug block mt-0.5">
+                Cultura de conformidade alinhada ao porte e rotina do negócio.
+              </span>
+            </div>
+          </div>
+        </motion.div>
+
       </div>
     </section>
   );
