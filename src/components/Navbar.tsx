@@ -107,16 +107,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
             </a>
           ))}
 
-          <a
-            href={INSTAGRAM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-xs font-semibold text-[#E8DFD2] hover:text-[#B69A6B] py-2 border-b border-white/5"
-          >
-            <Instagram className="w-4 h-4 text-[#B69A6B]" />
-            <span>@arc.compliance no Instagram</span>
-          </a>
-
           <button
             onClick={() => {
               setMobileMenuOpen(false);

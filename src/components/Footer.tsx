@@ -1,17 +1,10 @@
 import React, { useState } from 'react';
-import { Phone, Mail, Instagram, X, ArrowUpRight } from 'lucide-react';
+import { Mail, Instagram, X } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const [legalModal, setLegalModal] = useState<string | null>(null);
 
   const INSTAGRAM_URL = 'https://www.instagram.com/arc.compliance?xtok=MWo2cHlmdmwwcTVwdQ==';
-
-  const handleWhatsApp = () => {
-    window.open(
-      'https://wa.me/5511992561083?text=Ol%C3%A1%2C%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20as%20solu%C3%A7%C3%B5es%20da%20ARC%20Compliance%20%26%20Advisory',
-      '_blank'
-    );
-  };
 
   return (
     <footer className="bg-[#0B1A2C] text-[#F7F3EC] pt-16 pb-12 border-t border-[#B69A6B]/20 relative">
@@ -21,7 +14,7 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-14 border-b border-white/10">
           
           {/* Brand Presentation with White Logo */}
-          <div className="lg:col-span-5 space-y-5">
+          <div className="lg:col-span-6 space-y-5">
             <div className="flex items-center">
               <img
                 src="/public/assets/aistudio/arc-logo-white.png"
@@ -30,8 +23,8 @@ export const Footer: React.FC = () => {
               />
             </div>
 
-            <p className="text-xs text-[#E8DFD2]/80 leading-relaxed max-w-sm">
-              Consultoria boutique especializada em governança corporativa, compliance estratégico e gestão de riscos empresariais. Transformando conformidade em vantagem competitiva e segurança jurídica duradoura.
+            <p className="text-xs text-[#E8DFD2]/80 leading-relaxed max-w-md">
+              Consultoria boutique especializada em governança corporativa, conformidade estratégica e gestão preventiva de riscos empresariais. Transformando integridade em valor tangível e segurança patrimonial para sua empresa.
             </p>
 
             <div className="flex items-center gap-3 pt-2">
@@ -46,18 +39,18 @@ export const Footer: React.FC = () => {
                 <span>@arc.compliance</span>
               </a>
 
-              <button
-                onClick={handleWhatsApp}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#B69A6B]/20 hover:bg-[#B69A6B]/30 border border-[#B69A6B]/40 text-xs font-semibold text-[#B69A6B] transition-all cursor-pointer"
+              <a
+                href="mailto:contato@arccompliance.com.br"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#B69A6B]/20 hover:bg-[#B69A6B]/30 border border-[#B69A6B]/40 text-xs font-semibold text-[#B69A6B] transition-all"
               >
-                <Phone className="w-3.5 h-3.5" />
-                <span>WhatsApp Oficial</span>
-              </button>
+                <Mail className="w-3.5 h-3.5" />
+                <span>contato@arccompliance.com.br</span>
+              </a>
             </div>
           </div>
 
           {/* Quick Navigation */}
-          <div className="lg:col-span-2 space-y-3">
+          <div className="lg:col-span-3 space-y-3">
             <h4 className="text-xs uppercase font-bold tracking-widest text-[#B69A6B]">
               Navegação
             </h4>
@@ -80,32 +73,8 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Core Solutions Links (Objective, No Prices/Plans) */}
-          <div className="lg:col-span-3 space-y-3">
-            <h4 className="text-xs uppercase font-bold tracking-widest text-[#B69A6B]">
-              Soluções Estratégicas
-            </h4>
-            <ul className="space-y-2.5 text-xs text-[#E8DFD2]/80">
-              <li>
-                <a href="#solucoes" className="hover:text-white transition-colors">Diagnóstico & Auditoria de Integridade</a>
-              </li>
-              <li>
-                <a href="#solucoes" className="hover:text-white transition-colors">Código de Ética & Políticas Internas</a>
-              </li>
-              <li>
-                <a href="#solucoes" className="hover:text-white transition-colors">Canal de Denúncias & Apuração</a>
-              </li>
-              <li>
-                <a href="#solucoes" className="hover:text-white transition-colors">Due Diligence de Terceiros</a>
-              </li>
-              <li>
-                <a href="#solucoes" className="hover:text-white transition-colors">Treinamentos & Capacitação Executiva</a>
-              </li>
-            </ul>
-          </div>
-
           {/* Legal and Governance */}
-          <div className="lg:col-span-2 space-y-3">
+          <div className="lg:col-span-3 space-y-3">
             <h4 className="text-xs uppercase font-bold tracking-widest text-[#B69A6B]">
               Governança & Sigilo
             </h4>

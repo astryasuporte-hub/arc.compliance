@@ -66,14 +66,14 @@ export const DifferentiatorsSection: React.FC<DifferentiatorsSectionProps> = ({ 
                 <Target className="w-6 h-6" />
               </div>
               <h3 className="font-heading text-lg font-bold text-[#10243C] mb-2 leading-snug">
-                Habilitação em Grandes Contas
+                Soluções Sob Medida
               </h3>
               <p className="text-xs text-[#414850] leading-relaxed">
-                Adequamos sua empresa aos requisitos mais exigentes de Due Diligence e homologação de fornecedores de multinacionais.
+                Desenvolvemos programas personalizados que respeitam a estrutura, o porte e a realidade operacional da sua organização.
               </p>
             </div>
             <div className="pt-4 border-t border-[#E8DFD2] text-[11px] font-semibold text-[#B69A6B] mt-4 font-heading">
-              Aceleração de Vendas B2B
+              Adequação Real ao Negócio
             </div>
           </motion.div>
 

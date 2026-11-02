@@ -17,11 +17,11 @@ const PHASES: PhaseDetail[] = [
     num: '01',
     title: 'Diagnóstico & Imersão',
     shortDesc: 'Entendimento profundo do contexto e identificação de riscos.',
-    fullDesc: 'Imersão consultiva com os sócios e lideranças para mapear processos internos, cadeia de terceiros e vulnerabilidades regulatórias específicas do setor.',
+    fullDesc: 'Imersão consultiva com os sócios e lideranças para mapear processos internos, fluxos operacionais e vulnerabilidades específicas do setor.',
     activities: [
-      'Entrevistas confidenciais com C-Level e lideranças-chave',
-      'Auditoria preventiva de contratos e fluxos sensíveis',
-      'Análise de conformidade perante Lei Anticorrupção e LGPD',
+      'Entrevistas estratégicas com C-Level e lideranças-chave',
+      'Análise documental preventiva de contratos e fluxos sensíveis',
+      'Mapeamento de riscos e conformidade regulatória',
     ],
     deliverable: 'Relatório Executivo de Maturidade & Matriz de Vulnerabilidades',
     icon: Shield,
@@ -36,20 +36,20 @@ const PHASES: PhaseDetail[] = [
       'Cronograma objetivo de implementação em 30, 60 e 90 dias',
       'Alinhamento e validação direta com os fundadores e diretoria',
     ],
-    deliverable: 'Plano Diretor de Compliance & Cronograma de Implantação',
+    deliverable: 'Plano Diretor de Integridade & Cronograma de Implantação',
     icon: Layers,
   },
   {
     num: '03',
     title: 'Estruturação & Políticas',
-    shortDesc: 'Desenvolvimento das normas e canais operacionais.',
-    fullDesc: 'Elaboração técnica de políticas sob medida, Código de Ética e Conduta objetivo, procedimentos de contratação e estruturação do Canal de Denúncias.',
+    shortDesc: 'Desenvolvimento das normas e procedimentos operacionais.',
+    fullDesc: 'Elaboração técnica de políticas sob medida, Código de Ética e Conduta objetivo e procedimentos claros de governança para as equipes.',
     activities: [
       'Redação personalizada de manuais e políticas operacionais',
-      'Configuração de fluxo confidencial para Canal de Denúncias',
-      'Revisão e blindagem de cláusulas contratuais com terceiros',
+      'Estruturação de diretrizes de conduta e resolução de conflitos',
+      'Revisão e blindagem de cláusulas contratuais estratégicas',
     ],
-    deliverable: 'Código de Conduta, Manuais Operacionais e Canal Ativo',
+    deliverable: 'Código de Conduta, Manuais Operacionais e Políticas Internas',
     icon: FileCheck,
   },
   {
@@ -58,9 +58,9 @@ const PHASES: PhaseDetail[] = [
     shortDesc: 'Engajamento das equipes com foco em dilemas reais.',
     fullDesc: 'Disseminação da cultura de integridade por meio de workshops práticos e dinâmicos para a média liderança e áreas sensíveis da empresa.',
     activities: [
-      'Workshops executivos para a liderança e áreas sensíveis (Compras, Vendas, RH)',
-      'Orientações práticas de conduta e resolução de conflitos de interesse',
-      'Emissão de relatórios e certificados para fins de auditoria',
+      'Workshops executivos para a liderança e áreas sensíveis (Compras, Comercial, RH)',
+      'Orientações práticas de conduta e tomada de decisão ética',
+      'Emissão de relatórios e certificados corporativos de conclusão',
     ],
     deliverable: 'Certificados Corporativos & Relatório de Adesão',
     icon: Users,
@@ -68,12 +68,12 @@ const PHASES: PhaseDetail[] = [
   {
     num: '05',
     title: 'Gestão Contínua',
-    shortDesc: 'Acompanhamento preventivo e auditorias periódicas.',
-    fullDesc: 'Supervisão contínua da eficácia dos controles, suporte técnico ao comitê de ética e atualização diante de novas legislações.',
+    shortDesc: 'Acompanhamento preventivo e revisões periódicas.',
+    fullDesc: 'Supervisão contínua da eficácia dos controles, apoio técnico às lideranças e atualização diante de novas exigências de mercado.',
     activities: [
-      'Auditorias amostrais nos processos de compras e terceiros',
-      'Apoio consultivo técnico na apuração de relatos',
-      'Atualizações preventivas sobre mudanças na jurisprudência',
+      'Revisões periódicas nos processos de compras e fluxos internos',
+      'Apoio consultivo técnico contínuo para suporte aos gestores',
+      'Atualizações preventivas sobre tendências e boas práticas',
     ],
     deliverable: 'Painel Periódico de Integridade & Pareceres Técnicos',
     icon: Eye,
@@ -196,7 +196,7 @@ export const Approach: React.FC = () => {
                 {activePhase.deliverable}
               </div>
               <p className="text-xs text-[#414850] leading-relaxed">
-                Documentação assinada por consultor especialista, pronta para apresentação a conselhos, auditorias ou clientes internacionais.
+                Documentação assinada por consultor especialista, pronta para apresentação a conselhos, sócios e grandes parceiros comerciais.
               </p>
             </div>
           </motion.div>

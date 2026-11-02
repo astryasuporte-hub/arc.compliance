@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { 
   Mail, 
   Phone, 
   MapPin, 
   Instagram, 
   Send, 
-  CheckCircle2, 
-  Check,
+  Check, 
   Copy, 
   ExternalLink, 
   RefreshCw,
   ShieldCheck,
   AlertCircle
 } from 'lucide-react';
-import { sanitizeInput, isValidEmail, isValidPhone, buildSafeWhatsAppUrl } from '../utils/security.ts';
+import { sanitizeInput, isValidEmail, isValidPhone, buildSafeMailtoUrl } from '../utils/security.ts';
 
 interface ContactSectionProps {
   initialSolution?: string;
 }
+
+const ARC_EMAIL = 'contato@arccompliance.com.br';
+const INSTAGRAM_URL = 'https://www.instagram.com/arc.compliance?xtok=MWo2cHlmdmwwcTVwdQ==';
 
 export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution = '' }) => {
   const [formData, setFormData] = useState({
@@ -27,17 +29,18 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
     company: '',
     email: '',
     phone: '',
-    solution: initialSolution || 'Diagnóstico de Integridade & Compliance',
+    solution: initialSolution || 'Diagnóstico de Integridade & Conformidade',
     message: '',
   });
 
   const [validationError, setValidationError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [generatedWhatsAppUrl, setGeneratedWhatsAppUrl] = useState('');
+  const [generatedMailtoUrl, setGeneratedMailtoUrl] = useState('');
   const [formattedMessagePreview, setFormattedMessagePreview] = useState('');
+  const [emailSubject, setEmailSubject] = useState('');
   const [copied, setCopied] = useState(false);
-  const [whatsAppClicked, setWhatsAppClicked] = useState(false);
+  const [emailClicked, setEmailClicked] = useState(false);
 
   useEffect(() => {
     if (initialSolution) {
@@ -68,51 +71,56 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
       return;
     }
     if (!isValidPhone(cleanPhone)) {
-      setValidationError('Por favor, informe um telefone/WhatsApp com DDD válido.');
+      setValidationError('Por favor, informe um telefone de contato válido com DDD.');
       return;
     }
 
-    // Trigger subtle success confirmation animation on the button first
+    // Trigger subtle success confirmation animation on the button
     setIsSubmitting(true);
 
-    // Build formatted message for WhatsApp & print
-    const textLines = [
-      '🏛️ *SOLICITAÇÃO DE PROPOSTA | ARC COMPLIANCE & ADVISORY*',
-      '--------------------------------------------------',
-      `👤 *Nome:* ${cleanName}`,
-      cleanCompany ? `🏢 *Empresa:* ${cleanCompany}` : '',
-      cleanRole ? `💼 *Cargo:* ${cleanRole}` : '',
-      `📧 *E-mail:* ${cleanEmail}`,
-      `📱 *Telefone:* ${cleanPhone}`,
-      `🎯 *Interesse:* ${cleanSolution}`,
-      cleanMessage ? `📝 *Detalhes:* ${cleanMessage}` : '',
-      '--------------------------------------------------',
-      'Enviado através do site oficial da ARC Compliance',
-    ].filter(Boolean);
+    const subject = `Solicitação de Proposta | ARC Compliance - ${cleanCompany || cleanName}`;
+    setEmailSubject(subject);
 
-    const fullMessage = textLines.join('\n');
-    const safeUrl = buildSafeWhatsAppUrl('5511992561083', fullMessage);
+    // Build formatted message for Email
+    const emailBody = [
+      'Olá, equipe ARC Compliance & Advisory,',
+      '',
+      'Gostaria de solicitar uma proposta comercial personalizada para a nossa empresa:',
+      '',
+      `• Nome: ${cleanName}`,
+      cleanCompany ? `• Empresa: ${cleanCompany}` : '',
+      cleanRole ? `• Cargo / Função: ${cleanRole}` : '',
+      `• E-mail Corporativo: ${cleanEmail}`,
+      `• Telefone: ${cleanPhone}`,
+      `• Interesse Principal: ${cleanSolution}`,
+      cleanMessage ? `• Contexto / Detalhes: ${cleanMessage}` : '',
+      '',
+      'Solicitação enviada através do site oficial da ARC Compliance & Advisory.',
+    ].filter(Boolean).join('\n');
 
-    setFormattedMessagePreview(fullMessage);
-    setGeneratedWhatsAppUrl(safeUrl);
+    const safeMailto = buildSafeMailtoUrl(ARC_EMAIL, subject, emailBody);
+
+    setFormattedMessagePreview(emailBody);
+    setGeneratedMailtoUrl(safeMailto);
 
     // Smooth transition from checkmark on button to full confirmation view
     setTimeout(() => {
       setIsSubmitted(true);
       setIsSubmitting(false);
 
-      // Trigger WhatsApp deep link in new tab
+      // Trigger user default email client
       try {
-        window.open(safeUrl, '_blank', 'noopener,noreferrer');
+        window.location.href = safeMailto;
       } catch {
-        // Fallback: URL is ready on screen for the user
+        // Fallback: mailto link and copy button ready on screen
       }
     }, 600);
   };
 
   const handleCopyMessage = () => {
     if (navigator.clipboard) {
-      navigator.clipboard.writeText(formattedMessagePreview);
+      const fullTextToCopy = `Para: ${ARC_EMAIL}\nAssunto: ${emailSubject}\n\n${formattedMessagePreview}`;
+      navigator.clipboard.writeText(fullTextToCopy);
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     }
@@ -122,10 +130,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
     setIsSubmitted(false);
     setIsSubmitting(false);
     setCopied(false);
-    setWhatsAppClicked(false);
+    setEmailClicked(false);
   };
-
-  const INSTAGRAM_URL = 'https://www.instagram.com/arc.compliance?xtok=MWo2cHlmdmwwcTVwdQ==';
 
   return (
     <section id="contato" className="py-20 lg:py-28 bg-[#FFFCF8] text-[#10243C] relative overflow-hidden">
@@ -144,57 +150,52 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
           </h2>
 
           <p className="text-base text-[#414850] font-normal leading-relaxed">
-            Preencha os dados abaixo para gerar instantaneamente sua solicitação de proposta personalizada e iniciar a conversa com um consultor especialista.
+            Preencha os dados abaixo para receber uma proposta personalizada diretamente por e-mail de nossa equipe de consultores.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
-          {/* Left Column: Direct Contacts & Social */}
+          {/* Left Column: Direct Channels (Cleaned per user feedback) */}
           <div className="lg:col-span-5 space-y-6">
             <div className="bg-[#F7F3EC] p-8 rounded-2xl border border-[#E8DFD2] shadow-sm space-y-6">
               <h3 className="font-heading text-xl font-bold text-[#10243C] border-b border-[#E8DFD2] pb-4">
                 Canais Diretos de Atendimento
               </h3>
 
-              <div className="space-y-4">
-                {/* Telefone & WhatsApp */}
-                <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-xl bg-[#10243C] text-[#B69A6B] shrink-0 shadow-sm">
-                    <Phone className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#B69A6B] block">
-                      Telefone & WhatsApp Oficial
-                    </span>
-                    <a
-                      href="https://wa.me/5511992561083"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-base font-bold text-[#10243C] hover:text-[#B69A6B] transition-colors block mt-0.5"
-                    >
-                      +55 11 99256-1083
-                    </a>
-                    <span className="text-xs text-[#414850] block mt-0.5">
-                      Atendimento das 09h às 18h (Segunda a Sexta)
-                    </span>
-                  </div>
-                </div>
-
-                {/* E-mail */}
+              <div className="space-y-5">
+                {/* E-mail Institucional - Primary */}
                 <div className="flex items-start gap-4">
                   <div className="p-3 rounded-xl bg-[#10243C] text-[#B69A6B] shrink-0 shadow-sm">
                     <Mail className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#B69A6B] block">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#B69A6B] block font-heading">
                       E-mail Institucional
                     </span>
                     <a
-                      href="mailto:contato@arccompliance.com.br"
-                      className="text-sm font-semibold text-[#10243C] hover:text-[#B69A6B] transition-colors block mt-0.5"
+                      href={`mailto:${ARC_EMAIL}`}
+                      className="text-base font-bold text-[#10243C] hover:text-[#B69A6B] transition-colors block mt-0.5"
                     >
-                      contato@arccompliance.com.br
+                      {ARC_EMAIL}
+                    </a>
+                  </div>
+                </div>
+
+                {/* Telefone */}
+                <div className="flex items-start gap-4">
+                  <div className="p-3 rounded-xl bg-[#10243C] text-[#B69A6B] shrink-0 shadow-sm">
+                    <Phone className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#B69A6B] block font-heading">
+                      Telefone de Contato
+                    </span>
+                    <a
+                      href="tel:+5511992561083"
+                      className="text-base font-bold text-[#10243C] hover:text-[#B69A6B] transition-colors block mt-0.5"
+                    >
+                      +55 11 99256-1083
                     </a>
                   </div>
                 </div>
@@ -205,20 +206,17 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                     <Instagram className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#B69A6B] block">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#B69A6B] block font-heading">
                       Instagram Oficial
                     </span>
                     <a
                       href={INSTAGRAM_URL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-semibold text-[#10243C] hover:text-[#B69A6B] transition-colors block mt-0.5"
+                      className="text-base font-bold text-[#10243C] hover:text-[#B69A6B] transition-colors block mt-0.5"
                     >
                       @arc.compliance
                     </a>
-                    <span className="text-xs text-[#414850] block mt-0.5">
-                      Artigos, notícias regulatórias e bastidores
-                    </span>
                   </div>
                 </div>
 
@@ -228,28 +226,20 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#B69A6B] block">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#B69A6B] block font-heading">
                       Sede
                     </span>
-                    <span className="text-sm font-semibold text-[#10243C] block mt-0.5">
+                    <span className="text-base font-bold text-[#10243C] block mt-0.5">
                       São Paulo - SP
-                    </span>
-                    <span className="text-xs text-[#414850] block mt-0.5">
-                      Atuação consultiva presencial e remota em todo o Brasil
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* Security & Confidentiality Commitment */}
-              <div className="p-4 rounded-xl bg-[#FFFCF8] border border-[#E8DFD2] text-xs text-[#414850] leading-relaxed">
-                <strong className="text-[#10243C] block mb-1">Sigilo Profissional Absoluto:</strong>
-                Todas as informações enviadas são tratadas com sigilo estrito sob acordo prévio de confidencialidade técnica (NDA).
-              </div>
             </div>
           </div>
 
-          {/* Right Column: Interactive Proposal Form with Instant Ready Message */}
+          {/* Right Column: Interactive Proposal Form via Email */}
           <div className="lg:col-span-7">
             <div className="bg-[#FFFFFF] p-8 sm:p-10 rounded-2xl border border-[#E8DFD2] shadow-xl">
               
@@ -257,7 +247,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="flex items-center justify-between border-b border-[#E8DFD2] pb-4 mb-2">
                     <h3 className="font-heading text-xl font-bold text-[#10243C]">
-                      Solicitar Proposta Personalizada
+                      Solicitar Proposta por E-mail
                     </h3>
                     <span className="text-[11px] font-medium text-[#414850]">
                       Campos com * obrigatórios
@@ -273,7 +263,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5">
+                      <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5 font-heading">
                         Nome Completo *
                       </label>
                       <input
@@ -288,7 +278,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                     </div>
 
                     <div>
-                      <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5">
+                      <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5 font-heading">
                         Empresa
                       </label>
                       <input
@@ -304,13 +294,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5">
+                      <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5 font-heading">
                         Cargo / Função
                       </label>
                       <input
                         type="text"
                         maxLength={100}
-                        placeholder="Ex: Diretor, Sócio, Gerente de RH"
+                        placeholder="Ex: Diretor, Sócio, Gerente"
                         value={formData.role}
                         onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                         className="w-full px-4 py-3 rounded-xl bg-[#F7F3EC] border border-[#E8DFD2] text-xs text-[#10243C] focus:outline-none focus:border-[#B69A6B]"
@@ -318,8 +308,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                     </div>
 
                     <div>
-                      <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5">
-                        WhatsApp / Telefone *
+                      <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5 font-heading">
+                        Telefone de Contato *
                       </label>
                       <input
                         type="tel"
@@ -334,7 +324,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                   </div>
 
                   <div>
-                    <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5">
+                    <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5 font-heading">
                       E-mail Corporativo *
                     </label>
                     <input
@@ -349,7 +339,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                   </div>
 
                   <div>
-                    <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5">
+                    <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5 font-heading">
                       Solução / Interesse Principal
                     </label>
                     <select
@@ -357,18 +347,17 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                       onChange={(e) => setFormData({ ...formData, solution: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl bg-[#F7F3EC] border border-[#E8DFD2] text-xs text-[#10243C] focus:outline-none focus:border-[#B69A6B] cursor-pointer"
                     >
-                      <option value="Diagnóstico de Integridade & Compliance">Diagnóstico & Auditoria de Integridade</option>
-                      <option value="Código de Conduta & Políticas Internas">Código de Conduta & Políticas Internas</option>
-                      <option value="Canal de Denúncias & Comitê de Ética">Canal de Denúncias & Comitê de Ética</option>
-                      <option value="Due Diligence de Terceiros & Fornecedores">Due Diligence de Terceiros & Fornecedores</option>
-                      <option value="Treinamentos Corporativos & ARC Academy">Treinamentos Corporativos & ARC Academy</option>
-                      <option value="Governança Corporativa & Gestão de Riscos">Governança Corporativa & Gestão de Riscos</option>
-                      <option value="Consultoria Abrangente & Blindagem 360°">Consultoria Abrangente & Blindagem 360°</option>
+                      <option value="Diagnóstico de Integridade & Conformidade">Diagnóstico de Integridade & Conformidade</option>
+                      <option value="Código de Ética & Conduta Personalizado">Código de Ética & Conduta Personalizado</option>
+                      <option value="Políticas e Procedimentos Internos">Políticas e Procedimentos Internos</option>
+                      <option value="Gestão e Matriz de Riscos Corporativos">Gestão e Matriz de Riscos Corporativos</option>
+                      <option value="Treinamentos Corporativos & Conscientização">Treinamentos Corporativos & Conscientização</option>
+                      <option value="Estrutura Integrada de Compliance">Estrutura Integrada de Compliance</option>
                     </select>
                   </div>
 
                   <div>
-                    <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5">
+                    <label className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mb-1.5 font-heading">
                       Detalhes da Necessidade / Mensagem
                     </label>
                     <textarea
@@ -409,22 +398,22 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                               transition={{ duration: 0.35, ease: 'easeOut' }}
                             />
                           </motion.svg>
-                          <span>Solicitação Confirmada! Abrindo...</span>
+                          <span>Solicitação Preparada! Abrindo E-mail...</span>
                         </motion.span>
                       ) : (
                         <>
-                          <Send className="w-4 h-4" />
-                          <span>Enviar Solicitação de Contato com a ARC</span>
+                          <Mail className="w-4 h-4" />
+                          <span>Enviar Solicitação de Proposta por E-mail</span>
                         </>
                       )}
                     </button>
                     <span className="text-[11px] text-[#414850] text-center block mt-2">
-                      Gera automaticamente o link no WhatsApp pronto para envio e cópia.
+                      Gera automaticamente a mensagem formatada para envio direto ao e-mail institucional da ARC.
                     </span>
                   </div>
                 </form>
               ) : (
-                /* Instant Ready Message State with Subtle Checkmark Animation & WhatsApp */
+                /* Instant Ready Message State with Email Dispatch */
                 <motion.div
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -460,10 +449,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
 
                     <div>
                       <h4 className="font-heading text-lg font-bold text-[#10243C]">
-                        Solicitação Gerada com Sucesso!
+                        Solicitação Pronta para Envio!
                       </h4>
                       <p className="text-xs text-[#414850] mt-0.5">
-                        Sua mensagem foi formatada e está pronta para envio direto pelo WhatsApp.
+                        Sua proposta foi estruturada e está pronta para envio para <strong>{ARC_EMAIL}</strong>.
                       </p>
                     </div>
                   </div>
@@ -471,7 +460,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                   {/* Formatted Message Box */}
                   <div>
                     <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#414850] mb-2 font-heading">
-                      <span>Mensagem Pronta para Envio:</span>
+                      <span>Texto Formatado para o E-mail:</span>
                       <button
                         onClick={handleCopyMessage}
                         className="inline-flex items-center gap-1.5 text-[#B69A6B] hover:text-[#10243C] transition-colors cursor-pointer"
@@ -495,34 +484,33 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                     </div>
 
                     <pre className="p-4 rounded-xl bg-[#F7F3EC] border border-[#E8DFD2] text-xs text-[#10243C] font-mono whitespace-pre-wrap leading-relaxed overflow-x-auto shadow-inner">
-                      {formattedMessagePreview}
+                      {`Destinatário: ${ARC_EMAIL}\nAssunto: ${emailSubject}\n\n${formattedMessagePreview}`}
                     </pre>
                   </div>
 
                   {/* Action Buttons */}
                   <div className="flex flex-col sm:flex-row gap-3 pt-2">
                     <a
-                      href={generatedWhatsAppUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      href={generatedMailtoUrl}
                       onClick={() => {
-                        setWhatsAppClicked(true);
-                        setTimeout(() => setWhatsAppClicked(false), 2500);
+                        setEmailClicked(true);
+                        setTimeout(() => setEmailClicked(false), 2500);
                       }}
                       className="flex-1 py-3.5 rounded-xl bg-[#B69A6B] hover:bg-[#C8AE7D] text-[#10243C] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition-all font-heading"
                     >
-                      {whatsAppClicked ? (
+                      {emailClicked ? (
                         <motion.span
                           initial={{ scale: 0.9 }}
                           animate={{ scale: 1 }}
                           className="inline-flex items-center gap-1.5"
                         >
                           <Check className="w-4 h-4 text-[#10243C]" />
-                          <span>Abrindo no WhatsApp...</span>
+                          <span>Abrindo Aplicativo de E-mail...</span>
                         </motion.span>
                       ) : (
                         <>
-                          <span>Abrir no WhatsApp</span>
+                          <Mail className="w-4 h-4" />
+                          <span>Abrir no Aplicativo de E-mail</span>
                           <ExternalLink className="w-4 h-4" />
                         </>
                       )}
@@ -544,7 +532,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                       ) : (
                         <>
                           <Copy className="w-4 h-4 text-[#B69A6B]" />
-                          <span>Copiar Mensagem</span>
+                          <span>Copiar Dados</span>
                         </>
                       )}
                     </button>

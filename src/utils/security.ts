@@ -77,3 +77,14 @@ export function buildSafeWhatsAppUrl(phoneNumber: string, messageText: string): 
   const encodedText = encodeURIComponent(sanitizedMessage);
   return `https://wa.me/${safePhone}?text=${encodedText}`;
 }
+
+/**
+ * Generates an XSS-safe encoded mailto link.
+ */
+export function buildSafeMailtoUrl(emailTo: string, subject: string, bodyText: string): string {
+  const safeEmail = sanitizeInput(emailTo, 254);
+  const safeSubject = encodeURIComponent(sanitizeInput(subject, 200));
+  const safeBody = encodeURIComponent(sanitizeInput(bodyText, 4000));
+  return `mailto:${safeEmail}?subject=${safeSubject}&body=${safeBody}`;
+}
+

@@ -43,7 +43,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
 
             {/* Objective Narrative */}
             <p className="text-base sm:text-lg text-[#E8DFD2]/90 font-normal leading-relaxed mb-8 max-w-2xl">
-              Desenvolvemos programas de compliance práticos, eficientes e sem burocracia inútil. Protegemos a tomada de decisão da diretoria, mitigamos riscos legais e credenciamos sua organização para aprovação imediata em concorrências e auditorias de grandes clientes.
+              Desenvolvemos programas de compliance práticos, eficientes e sem burocracia inútil. Protegemos a tomada de decisão da diretoria, mitigamos riscos operacionais e fortalecemos a governança da sua empresa com diretrizes claras e sustentáveis.
             </p>
 
             {/* Clean CTAs: 'Entrar em Contato' & 'Conhecer Soluções' */}
@@ -94,10 +94,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
                 <CheckCircle2 className="w-4 h-4 text-[#B69A6B] shrink-0 mt-0.5" />
                 <div>
                   <span className="text-xs font-bold text-white uppercase tracking-wider block font-heading">
-                    Aprovação B2B
+                    Cultura Ética
                   </span>
                   <span className="text-[11px] text-[#A8B8CD] leading-snug">
-                    Diferencial em Due Diligence
+                    Diretrizes claras para toda a equipe
                   </span>
                 </div>
               </div>
@@ -152,10 +152,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
                     </span>
                   </div>
                   <span className="text-xs font-bold text-[#10243C] block leading-tight font-heading">
-                    Proteção sob NDA
+                    Confidencialidade
                   </span>
                   <span className="text-[11px] text-[#414850] block mt-1 leading-snug">
-                    Termo formal de confidencialidade técnica
+                    Resguardo ético e profissional em todas as análises
                   </span>
                 </div>
 
@@ -163,14 +163,14 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
                   <div className="flex items-center gap-2 mb-1.5">
                     <CheckCircle2 className="w-4 h-4 text-[#B69A6B]" />
                     <span className="text-[10px] font-bold uppercase tracking-wider text-[#B69A6B] font-heading">
-                      Due Diligence
+                      Gestão de Riscos
                     </span>
                   </div>
                   <span className="text-xs font-bold text-[#10243C] block leading-tight font-heading">
-                    Homologação B2B
+                    Prevenção Real
                   </span>
                   <span className="text-[11px] text-[#414850] block mt-1 leading-snug">
-                    Aprovação facilitada perante grandes clientes
+                    Mapeamento de vulnerabilidades e prioridades
                   </span>
                 </div>
 
@@ -192,15 +192,15 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
 
               {/* Core Corporate Deliverables */}
               <div className="pt-5 space-y-3">
-                <div className="text-xs font-bold uppercase tracking-wider text-[#414850] mb-2">
-                  Atuação Estratégica Completa
+                <div className="text-xs font-bold uppercase tracking-wider text-[#414850] mb-2 font-heading">
+                  Atuação Estratégica
                 </div>
 
                 <div className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-[#F7F3EC] transition-colors">
                   <FileCheck className="w-4 h-4 text-[#B69A6B] shrink-0 mt-0.5" />
                   <div>
                     <h4 className="text-xs font-bold text-[#10243C]">
-                      Código de Ética & Políticas Operacionais
+                      Código de Ética e Conduta
                     </h4>
                     <p className="text-[11px] text-[#414850] leading-snug">
                       Diretrizes claras e manuais objetivos adaptados à cultura da empresa.
@@ -212,10 +212,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
                   <Lock className="w-4 h-4 text-[#B69A6B] shrink-0 mt-0.5" />
                   <div>
                     <h4 className="text-xs font-bold text-[#10243C]">
-                      Canal de Denúncias Independente & Sigiloso
+                      Políticas e Procedimentos Internos
                     </h4>
                     <p className="text-[11px] text-[#414850] leading-snug">
-                      Recepção e triagem imparcial de relatos com proteção integral ao denunciante.
+                      Normas para compras, relações comerciais e rotina operacional.
                     </p>
                   </div>
                 </div>
@@ -223,9 +223,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
                 <div className="pt-2">
                   <button
                     onClick={onOpenContact}
-                    className="w-full py-3.5 rounded-xl bg-[#10243C] hover:bg-[#162D4A] text-[#F7F3EC] text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer"
+                    className="w-full py-3.5 rounded-xl bg-[#10243C] hover:bg-[#162D4A] text-[#F7F3EC] text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer font-heading"
                   >
-                    <span>Solicitar Proposta para Minha Empresa</span>
+                    <span>Solicitar Proposta por E-mail</span>
                     <ArrowRight className="w-4 h-4 text-[#B69A6B]" />
                   </button>
                 </div>

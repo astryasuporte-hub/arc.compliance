@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Target, Award, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Award, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 interface AboutProps {
   onOpenContact: () => void;
@@ -31,31 +31,21 @@ export const About: React.FC<AboutProps> = ({ onOpenContact }) => {
             </h2>
 
             <p className="text-base text-[#414850] font-normal leading-relaxed">
-              Fundada para desmistificar o compliance corporativo, a <strong className="text-[#10243C] font-semibold">ARC Compliance & Advisory</strong> elimina o excesso de juridiquês e burocracia inútil. Desenvolvemos programas sob medida que protegem o negócio e respeitam o ritmo operacional da sua equipe.
+              A <strong className="text-[#10243C] font-semibold">ARC Compliance & Advisory</strong> é uma consultoria voltada ao desenvolvimento e fortalecimento de práticas de ética, governança e integridade corporativa. Nosso propósito é auxiliar organizações na construção de ambientes mais transparentes e seguros.
             </p>
 
             <p className="text-sm text-[#414850] leading-relaxed">
-              Não vendemos pastas de manuais para ficarem guardadas na gaveta. Nossas entregas são operacionais: código de conduta visual, canal de denúncias independente, matriz dinâmica de riscos e capacitações práticas que geram conscientização imediata.
+              Atuamos com soluções sob medida, adequadas ao porte, à realidade operacional e aos riscos de cada negócio. Não vendemos manuais engessados para ficarem guardados na gaveta: desenvolvemos códigos de conduta claros, políticas aplicáveis e capacitações práticas.
             </p>
 
-            <div className="grid grid-cols-2 gap-4 pt-2">
-              <div className="p-4 rounded-xl bg-[#FFFCF8] border border-[#E8DFD2] shadow-sm">
-                <span className="font-heading text-lg font-bold text-[#B69A6B] block">Corpo Sênior</span>
-                <span className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mt-1 font-heading">
-                  Atendimento Direto
+            <div className="p-5 rounded-2xl bg-[#FFFCF8] border border-[#E8DFD2] shadow-sm flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-[#B69A6B] shrink-0 mt-0.5" />
+              <div>
+                <span className="font-heading text-sm font-bold text-[#10243C] block">
+                  Adequação à Realidade Operacional
                 </span>
-                <p className="text-[11px] text-[#414850] mt-0.5">
-                  Projetos conduzidos diretamente por especialistas em integridade
-                </p>
-              </div>
-
-              <div className="p-4 rounded-xl bg-[#FFFCF8] border border-[#E8DFD2] shadow-sm">
-                <span className="font-heading text-lg font-bold text-[#B69A6B] block">Prática Real</span>
-                <span className="text-xs font-bold uppercase tracking-wider text-[#10243C] block mt-1 font-heading">
-                  Sem Burocracia
-                </span>
-                <p className="text-[11px] text-[#414850] mt-0.5">
-                  Processos integrados à rotina operacional diária da empresa
+                <p className="text-xs text-[#414850] mt-1 leading-relaxed">
+                  Estruturamos programas objetivos que preservam o ritmo das equipes e respeitam o cotidiano da sua organização.
                 </p>
               </div>
             </div>
@@ -65,7 +55,7 @@ export const About: React.FC<AboutProps> = ({ onOpenContact }) => {
                 onClick={onOpenContact}
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#10243C] text-[#F7F3EC] text-xs font-bold uppercase tracking-wider hover:bg-[#162D4A] transition-all cursor-pointer shadow-lg font-heading"
               >
-                <span>Agendar Conversa com um Consultor Sênior</span>
+                <span>Falar com um Consultor Especialista</span>
                 <ArrowRight className="w-4 h-4 text-[#B69A6B]" />
               </button>
             </div>
@@ -77,7 +67,7 @@ export const About: React.FC<AboutProps> = ({ onOpenContact }) => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="lg:col-span-6 space-y-4"
+            className="lg:col-span-6 space-y-5"
           >
             <div className="p-6 rounded-2xl bg-[#FFFCF8] border border-[#E8DFD2] shadow-sm flex items-start gap-4">
               <div className="w-12 h-12 rounded-xl bg-[#10243C] text-[#B69A6B] flex items-center justify-center shrink-0">
@@ -88,21 +78,7 @@ export const About: React.FC<AboutProps> = ({ onOpenContact }) => {
                   Blindagem da Alta Gestão
                 </h3>
                 <p className="text-xs text-[#414850] leading-relaxed">
-                  Evitamos que a responsabilidade por falhas de colaboradores recaia de forma direta e pessoal sobre o patrimônio dos sócios e executivos.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-[#FFFCF8] border border-[#E8DFD2] shadow-sm flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#10243C] text-[#B69A6B] flex items-center justify-center shrink-0">
-                <Target className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="font-heading text-base font-bold text-[#10243C] mb-1">
-                  Aprovação em Due Diligence
-                </h3>
-                <p className="text-xs text-[#414850] leading-relaxed">
-                  Garantimos que sua empresa passe com louvor nas checagens cadastrais de multinacionais, fundos de investimento e instituições financeiras.
+                  Protegemos a tomada de decisão de sócios, diretores e administradores, estabelecendo diretrizes formais que delimitam responsabilidades e preservam o patrimônio da empresa.
                 </p>
               </div>
             </div>
@@ -116,7 +92,7 @@ export const About: React.FC<AboutProps> = ({ onOpenContact }) => {
                   Cultura de Integridade & Ambiente Saudável
                 </h3>
                 <p className="text-xs text-[#414850] leading-relaxed">
-                  Redução drástica de conflitos trabalhistas, assédio e desvios éticos por meio de canais seguros e lideranças preparadas.
+                  Redução de riscos de conduta e conflitos internos por meio de normas éticas acessíveis, comunicação transparente e lideranças preparadas para orientar suas equipes.
                 </p>
               </div>
             </div>
