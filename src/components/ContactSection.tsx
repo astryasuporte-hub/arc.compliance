@@ -256,24 +256,25 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-5 space-y-6"
           >
-            <div className="bg-[#F7F3EC] p-6 sm:p-8 rounded-2xl border border-[#E8DFD2] shadow-sm space-y-6">
-              <h3 className="font-heading text-xl font-bold text-[#10243C] border-b border-[#E8DFD2] pb-4">
+            <div className="bg-[#F7F3EC] p-5 sm:p-8 rounded-2xl border border-[#E8DFD2] shadow-sm space-y-6">
+              <h3 className="font-heading text-lg sm:text-xl font-bold text-[#10243C] border-b border-[#E8DFD2] pb-4">
                 Canais Diretos de Atendimento
               </h3>
 
-              <div className="space-y-5">
+              <div className="space-y-4 sm:space-y-5">
                 {/* E-mail Institucional - Primary */}
-                <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-xl bg-[#10243C] text-[#B69A6B] shrink-0 shadow-sm">
-                    <Mail className="w-5 h-5" />
+                <div className="flex items-start gap-3 sm:gap-4 p-2.5 -mx-2.5 rounded-xl hover:bg-[#10243C]/5 transition-colors group">
+                  <div className="p-2.5 sm:p-3 rounded-xl bg-[#10243C] group-hover:bg-[#162D4A] text-[#B69A6B] shrink-0 shadow-sm transition-all group-hover:scale-105">
+                    <Mail className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
-                  <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#B69A6B] block font-heading">
+                  <div className="min-w-0 flex-1">
+                    <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#B69A6B] block font-heading">
                       E-mail Institucional
                     </span>
                     <a
                       href={`mailto:${ARC_EMAIL}`}
-                      className="text-base font-bold text-[#10243C] hover:text-[#B69A6B] transition-colors block mt-0.5 break-all"
+                      className="text-[13px] sm:text-[15px] lg:text-base font-bold text-[#10243C] group-hover:text-[#B69A6B] transition-colors block mt-0.5 tracking-tight truncate whitespace-nowrap"
+                      title={ARC_EMAIL}
                     >
                       {ARC_EMAIL}
                     </a>
@@ -281,17 +282,17 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                 </div>
 
                 {/* Telefone */}
-                <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-xl bg-[#10243C] text-[#B69A6B] shrink-0 shadow-sm">
-                    <Phone className="w-5 h-5" />
+                <div className="flex items-start gap-3 sm:gap-4 p-2.5 -mx-2.5 rounded-xl hover:bg-[#10243C]/5 transition-colors group">
+                  <div className="p-2.5 sm:p-3 rounded-xl bg-[#10243C] group-hover:bg-[#162D4A] text-[#B69A6B] shrink-0 shadow-sm transition-all group-hover:scale-105">
+                    <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
-                  <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#B69A6B] block font-heading">
+                  <div className="min-w-0 flex-1">
+                    <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#B69A6B] block font-heading">
                       Telefone de Contato
                     </span>
                     <a
                       href="tel:+5511992561083"
-                      className="text-base font-bold text-[#10243C] hover:text-[#B69A6B] transition-colors block mt-0.5"
+                      className="text-sm sm:text-base font-bold text-[#10243C] group-hover:text-[#B69A6B] transition-colors block mt-0.5 tracking-tight"
                     >
                       +55 11 99256-1083
                     </a>
@@ -299,19 +300,19 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                 </div>
 
                 {/* Instagram */}
-                <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-xl bg-[#10243C] text-[#B69A6B] shrink-0 shadow-sm">
-                    <Instagram className="w-5 h-5" />
+                <div className="flex items-start gap-3 sm:gap-4 p-2.5 -mx-2.5 rounded-xl hover:bg-[#10243C]/5 transition-colors group">
+                  <div className="p-2.5 sm:p-3 rounded-xl bg-[#10243C] group-hover:bg-[#162D4A] text-[#B69A6B] shrink-0 shadow-sm transition-all group-hover:scale-105">
+                    <Instagram className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
-                  <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#B69A6B] block font-heading">
+                  <div className="min-w-0 flex-1">
+                    <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#B69A6B] block font-heading">
                       Instagram Oficial
                     </span>
                     <a
                       href={INSTAGRAM_URL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-base font-bold text-[#10243C] hover:text-[#B69A6B] transition-colors block mt-0.5"
+                      className="text-sm sm:text-base font-bold text-[#10243C] group-hover:text-[#B69A6B] transition-colors block mt-0.5 tracking-tight truncate"
                     >
                       @arc.compliance
                     </a>
@@ -319,19 +320,19 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                 </div>
 
                 {/* LinkedIn */}
-                <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-xl bg-[#10243C] text-[#B69A6B] shrink-0 shadow-sm">
-                    <Linkedin className="w-5 h-5" />
+                <div className="flex items-start gap-3 sm:gap-4 p-2.5 -mx-2.5 rounded-xl hover:bg-[#10243C]/5 transition-colors group">
+                  <div className="p-2.5 sm:p-3 rounded-xl bg-[#10243C] group-hover:bg-[#162D4A] text-[#B69A6B] shrink-0 shadow-sm transition-all group-hover:scale-105">
+                    <Linkedin className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
-                  <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#B69A6B] block font-heading">
+                  <div className="min-w-0 flex-1">
+                    <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#B69A6B] block font-heading">
                       LinkedIn Corporativo
                     </span>
                     <a
                       href={LINKEDIN_URL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-base font-bold text-[#10243C] hover:text-[#B69A6B] transition-colors block mt-0.5"
+                      className="text-sm sm:text-base font-bold text-[#10243C] group-hover:text-[#B69A6B] transition-colors block mt-0.5 tracking-tight truncate"
                     >
                       ARC Compliance & Advisory
                     </a>
@@ -339,15 +340,15 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialSolution 
                 </div>
 
                 {/* Localização */}
-                <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-xl bg-[#10243C] text-[#B69A6B] shrink-0 shadow-sm">
-                    <MapPin className="w-5 h-5" />
+                <div className="flex items-start gap-3 sm:gap-4 p-2.5 -mx-2.5 rounded-xl hover:bg-[#10243C]/5 transition-colors group">
+                  <div className="p-2.5 sm:p-3 rounded-xl bg-[#10243C] group-hover:bg-[#162D4A] text-[#B69A6B] shrink-0 shadow-sm transition-all group-hover:scale-105">
+                    <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
-                  <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#B69A6B] block font-heading">
+                  <div className="min-w-0 flex-1">
+                    <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#B69A6B] block font-heading">
                       Sede
                     </span>
-                    <span className="text-base font-bold text-[#10243C] block mt-0.5">
+                    <span className="text-sm sm:text-base font-bold text-[#10243C] block mt-0.5 tracking-tight">
                       São Paulo - SP
                     </span>
                   </div>

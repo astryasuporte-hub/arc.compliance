@@ -42,13 +42,14 @@ export const DifferentiatorsSection: React.FC<DifferentiatorsSectionProps> = ({ 
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.4 }}
-            whileHover={{ y: -6, scale: 1.015, transition: { duration: 0.25 } }}
-            whileTap={{ scale: 0.99 }}
-            className="bg-[#FFFCF8] rounded-2xl p-7 border border-[#E8DFD2] shadow-sm hover:shadow-2xl hover:shadow-[#B69A6B]/15 hover:border-[#B69A6B]/60 transition-all flex flex-col justify-between group cursor-pointer"
+            whileHover={{ y: -8, scale: 1.02, transition: { type: 'spring', stiffness: 350, damping: 22 } }}
+            whileTap={{ scale: 0.98 }}
+            className="bg-[#FFFCF8] rounded-2xl p-7 border border-[#E8DFD2] shadow-sm hover:shadow-2xl hover:shadow-[#B69A6B]/20 hover:border-[#B69A6B]/80 transition-all flex flex-col justify-between group cursor-pointer relative overflow-hidden"
           >
+            <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-[#B69A6B] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div>
-              <div className="w-12 h-12 rounded-xl bg-[#10243C] text-[#B69A6B] flex items-center justify-center mb-5 group-hover:bg-[#162D4A] transition-colors shadow-sm">
-                <Target className="w-6 h-6 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" />
+              <div className="w-12 h-12 rounded-xl bg-[#10243C] text-[#B69A6B] flex items-center justify-center mb-5 group-hover:bg-[#162D4A] transition-colors shadow-sm group-hover:shadow-md">
+                <Target className="w-6 h-6 transition-transform duration-300 group-hover:scale-115 group-hover:rotate-6" />
               </div>
               <h3 className="font-heading text-lg font-bold text-[#10243C] mb-2 leading-snug group-hover:text-[#B69A6B] transition-colors">
                 Soluções Sob Medida
@@ -59,7 +60,7 @@ export const DifferentiatorsSection: React.FC<DifferentiatorsSectionProps> = ({ 
             </div>
             <div className="pt-4 border-t border-[#E8DFD2] text-[11px] font-semibold text-[#B69A6B] mt-4 font-heading flex items-center justify-between">
               <span>Adequação Real ao Negócio</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#B69A6B]/50 group-hover:bg-[#B69A6B] group-hover:scale-150 transition-all" />
+              <span className="w-2 h-2 rounded-full bg-[#B69A6B]/50 group-hover:bg-[#B69A6B] group-hover:scale-150 transition-all duration-300" />
             </div>
           </motion.div>
 
@@ -68,13 +69,14 @@ export const DifferentiatorsSection: React.FC<DifferentiatorsSectionProps> = ({ 
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.4, delay: 0.08 }}
-            whileHover={{ y: -6, scale: 1.015, transition: { duration: 0.25 } }}
-            whileTap={{ scale: 0.99 }}
-            className="bg-[#FFFCF8] rounded-2xl p-7 border border-[#E8DFD2] shadow-sm hover:shadow-2xl hover:shadow-[#B69A6B]/15 hover:border-[#B69A6B]/60 transition-all flex flex-col justify-between group cursor-pointer"
+            whileHover={{ y: -8, scale: 1.02, transition: { type: 'spring', stiffness: 350, damping: 22 } }}
+            whileTap={{ scale: 0.98 }}
+            className="bg-[#FFFCF8] rounded-2xl p-7 border border-[#E8DFD2] shadow-sm hover:shadow-2xl hover:shadow-[#B69A6B]/20 hover:border-[#B69A6B]/80 transition-all flex flex-col justify-between group cursor-pointer relative overflow-hidden"
           >
+            <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-[#B69A6B] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div>
-              <div className="w-12 h-12 rounded-xl bg-[#10243C] text-[#B69A6B] flex items-center justify-center mb-5 group-hover:bg-[#162D4A] transition-colors shadow-sm">
-                <Zap className="w-6 h-6 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6" />
+              <div className="w-12 h-12 rounded-xl bg-[#10243C] text-[#B69A6B] flex items-center justify-center mb-5 group-hover:bg-[#162D4A] transition-colors shadow-sm group-hover:shadow-md">
+                <Zap className="w-6 h-6 transition-transform duration-300 group-hover:scale-115 group-hover:-rotate-6" />
               </div>
               <h3 className="font-heading text-lg font-bold text-[#10243C] mb-2 leading-snug group-hover:text-[#B69A6B] transition-colors">
                 Praticidade Sem Burocracia
@@ -85,7 +87,7 @@ export const DifferentiatorsSection: React.FC<DifferentiatorsSectionProps> = ({ 
             </div>
             <div className="pt-4 border-t border-[#E8DFD2] text-[11px] font-semibold text-[#B69A6B] mt-4 font-heading flex items-center justify-between">
               <span>Aplicação Real no Cotidiano</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#B69A6B]/50 group-hover:bg-[#B69A6B] group-hover:scale-150 transition-all" />
+              <span className="w-2 h-2 rounded-full bg-[#B69A6B]/50 group-hover:bg-[#B69A6B] group-hover:scale-150 transition-all duration-300" />
             </div>
           </motion.div>
 
@@ -94,13 +96,14 @@ export const DifferentiatorsSection: React.FC<DifferentiatorsSectionProps> = ({ 
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.4, delay: 0.16 }}
-            whileHover={{ y: -6, scale: 1.015, transition: { duration: 0.25 } }}
-            whileTap={{ scale: 0.99 }}
-            className="bg-[#FFFCF8] rounded-2xl p-7 border border-[#E8DFD2] shadow-sm hover:shadow-2xl hover:shadow-[#B69A6B]/15 hover:border-[#B69A6B]/60 transition-all flex flex-col justify-between group cursor-pointer"
+            whileHover={{ y: -8, scale: 1.02, transition: { type: 'spring', stiffness: 350, damping: 22 } }}
+            whileTap={{ scale: 0.98 }}
+            className="bg-[#FFFCF8] rounded-2xl p-7 border border-[#E8DFD2] shadow-sm hover:shadow-2xl hover:shadow-[#B69A6B]/20 hover:border-[#B69A6B]/80 transition-all flex flex-col justify-between group cursor-pointer relative overflow-hidden"
           >
+            <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-[#B69A6B] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div>
-              <div className="w-12 h-12 rounded-xl bg-[#10243C] text-[#B69A6B] flex items-center justify-center mb-5 group-hover:bg-[#162D4A] transition-colors shadow-sm">
-                <Award className="w-6 h-6 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" />
+              <div className="w-12 h-12 rounded-xl bg-[#10243C] text-[#B69A6B] flex items-center justify-center mb-5 group-hover:bg-[#162D4A] transition-colors shadow-sm group-hover:shadow-md">
+                <Award className="w-6 h-6 transition-transform duration-300 group-hover:scale-115 group-hover:rotate-6" />
               </div>
               <h3 className="font-heading text-lg font-bold text-[#10243C] mb-2 leading-snug group-hover:text-[#B69A6B] transition-colors">
                 Atendimento Sênior Direto
@@ -111,7 +114,7 @@ export const DifferentiatorsSection: React.FC<DifferentiatorsSectionProps> = ({ 
             </div>
             <div className="pt-4 border-t border-[#E8DFD2] text-[11px] font-semibold text-[#B69A6B] mt-4 font-heading flex items-center justify-between">
               <span>Expertise & Rigor Técnico</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#B69A6B]/50 group-hover:bg-[#B69A6B] group-hover:scale-150 transition-all" />
+              <span className="w-2 h-2 rounded-full bg-[#B69A6B]/50 group-hover:bg-[#B69A6B] group-hover:scale-150 transition-all duration-300" />
             </div>
           </motion.div>
 

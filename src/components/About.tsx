@@ -1,12 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Award, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Award, CheckCircle2 } from 'lucide-react';
 
 interface AboutProps {
-  onOpenContact: () => void;
+  onOpenContact?: () => void;
 }
 
-export const About: React.FC<AboutProps> = ({ onOpenContact }) => {
+export const About: React.FC<AboutProps> = () => {
   return (
     <section id="sobre" className="py-20 lg:py-28 bg-[#F7F3EC] text-[#10243C] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -38,27 +38,23 @@ export const About: React.FC<AboutProps> = ({ onOpenContact }) => {
               Atuamos com soluções sob medida, adequadas ao porte, à realidade operacional e aos riscos de cada negócio. Não vendemos manuais engessados para ficarem guardados na gaveta: desenvolvemos códigos de conduta claros, políticas aplicáveis e capacitações práticas.
             </p>
 
-            <div className="p-5 rounded-2xl bg-[#FFFCF8] border border-[#E8DFD2] shadow-sm flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-[#B69A6B] shrink-0 mt-0.5" />
+            <motion.div
+              whileHover={{ y: -4, scale: 1.01, transition: { duration: 0.25 } }}
+              whileTap={{ scale: 0.99 }}
+              className="p-5 rounded-2xl bg-[#FFFCF8] border border-[#E8DFD2] hover:border-[#B69A6B]/60 hover:shadow-xl hover:shadow-[#B69A6B]/10 transition-all flex items-start gap-3.5 group cursor-pointer"
+            >
+              <div className="w-9 h-9 rounded-xl bg-[#10243C] group-hover:bg-[#162D4A] text-[#B69A6B] flex items-center justify-center shrink-0 transition-colors shadow-sm mt-0.5">
+                <CheckCircle2 className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              </div>
               <div>
-                <span className="font-heading text-sm font-bold text-[#10243C] block">
+                <span className="font-heading text-sm font-bold text-[#10243C] group-hover:text-[#B69A6B] transition-colors block">
                   Adequação à Realidade Operacional
                 </span>
                 <p className="text-xs text-[#414850] mt-1 leading-relaxed">
                   Estruturamos programas objetivos que preservam o ritmo das equipes e respeitam o cotidiano da sua organização.
                 </p>
               </div>
-            </div>
-
-            <div className="pt-2">
-              <button
-                onClick={onOpenContact}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#10243C] text-[#F7F3EC] text-xs font-bold uppercase tracking-wider hover:bg-[#162D4A] transition-all cursor-pointer shadow-lg font-heading"
-              >
-                <span>Falar com um Consultor Especialista</span>
-                <ArrowRight className="w-4 h-4 text-[#B69A6B]" />
-              </button>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Right Column: Values & Differentiators */}
@@ -70,8 +66,9 @@ export const About: React.FC<AboutProps> = ({ onOpenContact }) => {
             className="lg:col-span-6 space-y-5"
           >
             <motion.div
-              whileHover={{ y: -5, scale: 1.01, transition: { duration: 0.2 } }}
-              className="p-6 rounded-2xl bg-[#FFFCF8] border border-[#E8DFD2] hover:border-[#B69A6B]/50 hover:shadow-xl hover:shadow-[#B69A6B]/10 transition-all flex items-start gap-4 group cursor-pointer"
+              whileHover={{ y: -6, scale: 1.015, transition: { duration: 0.25 } }}
+              whileTap={{ scale: 0.99 }}
+              className="p-6 rounded-2xl bg-[#FFFCF8] border border-[#E8DFD2] hover:border-[#B69A6B]/60 hover:shadow-xl hover:shadow-[#B69A6B]/15 transition-all flex items-start gap-4 group cursor-pointer"
             >
               <div className="w-12 h-12 rounded-xl bg-[#10243C] text-[#B69A6B] flex items-center justify-center shrink-0 group-hover:bg-[#162D4A] transition-colors shadow-sm">
                 <ShieldCheck className="w-6 h-6 group-hover:scale-110 transition-transform" />
@@ -87,8 +84,9 @@ export const About: React.FC<AboutProps> = ({ onOpenContact }) => {
             </motion.div>
 
             <motion.div
-              whileHover={{ y: -5, scale: 1.01, transition: { duration: 0.2 } }}
-              className="p-6 rounded-2xl bg-[#FFFCF8] border border-[#E8DFD2] hover:border-[#B69A6B]/50 hover:shadow-xl hover:shadow-[#B69A6B]/10 transition-all flex items-start gap-4 group cursor-pointer"
+              whileHover={{ y: -6, scale: 1.015, transition: { duration: 0.25 } }}
+              whileTap={{ scale: 0.99 }}
+              className="p-6 rounded-2xl bg-[#FFFCF8] border border-[#E8DFD2] hover:border-[#B69A6B]/60 hover:shadow-xl hover:shadow-[#B69A6B]/15 transition-all flex items-start gap-4 group cursor-pointer"
             >
               <div className="w-12 h-12 rounded-xl bg-[#10243C] text-[#B69A6B] flex items-center justify-center shrink-0 group-hover:bg-[#162D4A] transition-colors shadow-sm">
                 <Award className="w-6 h-6 group-hover:scale-110 transition-transform" />

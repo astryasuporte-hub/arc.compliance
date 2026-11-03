@@ -131,9 +131,9 @@ export const SolutionsSection: React.FC<SolutionsSectionProps> = ({ onSelectSolu
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.5, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ y: -7, scale: 1.015, transition: { duration: 0.25, ease: 'easeOut' } }}
-                whileTap={{ scale: 0.99 }}
-                className="bg-[#FFFFFF] rounded-2xl p-6 sm:p-7 border border-[#E8DFD2] shadow-sm hover:shadow-2xl hover:shadow-[#B69A6B]/15 hover:border-[#B69A6B]/60 transition-all flex flex-col justify-between group cursor-pointer relative overflow-hidden"
+                whileHover={{ y: -8, scale: 1.018, transition: { type: 'spring', stiffness: 350, damping: 22 } }}
+                whileTap={{ scale: 0.985 }}
+                className="bg-[#FFFFFF] rounded-2xl p-6 sm:p-7 border border-[#E8DFD2] shadow-sm hover:shadow-2xl hover:shadow-[#B69A6B]/20 hover:border-[#B69A6B]/80 transition-all flex flex-col justify-between group cursor-pointer relative overflow-hidden"
               >
                 {/* Subtle top card glow line on hover */}
                 <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-[#B69A6B] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -141,9 +141,9 @@ export const SolutionsSection: React.FC<SolutionsSectionProps> = ({ onSelectSolu
                 <div>
                   <div className="flex items-center justify-between mb-5">
                     <div className="w-12 h-12 rounded-xl bg-[#F7F3EC] group-hover:bg-[#10243C] text-[#B69A6B] flex items-center justify-center transition-all duration-300 shadow-sm group-hover:shadow-md">
-                      <Icon className="w-6 h-6 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3" />
+                      <Icon className="w-6 h-6 transition-transform duration-300 group-hover:scale-115 group-hover:-rotate-3" />
                     </div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#B69A6B] bg-[#F7F3EC] group-hover:bg-[#10243C]/5 px-2.5 py-1 rounded-full border border-[#E8DFD2] font-heading transition-colors">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#B69A6B] bg-[#F7F3EC] group-hover:bg-[#10243C]/5 px-2.5 py-1 rounded-full border border-[#E8DFD2] group-hover:border-[#B69A6B]/40 font-heading transition-colors">
                       {solution.category}
                     </span>
                   </div>
@@ -161,8 +161,8 @@ export const SolutionsSection: React.FC<SolutionsSectionProps> = ({ onSelectSolu
                       O que está contemplado:
                     </span>
                     {solution.highlights.map((h, i) => (
-                      <div key={i} className="flex items-start gap-2 text-xs text-[#414850] leading-snug">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#B69A6B] shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+                      <div key={i} className="flex items-start gap-2 text-xs text-[#414850] leading-snug transition-transform duration-200 group-hover:translate-x-0.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#B69A6B] shrink-0 mt-0.5 group-hover:scale-115 transition-transform" />
                         <span>{h}</span>
                       </div>
                     ))}
@@ -172,10 +172,10 @@ export const SolutionsSection: React.FC<SolutionsSectionProps> = ({ onSelectSolu
                 <div className="pt-4 border-t border-[#E8DFD2]/60 mt-auto">
                   <button
                     onClick={() => onSelectSolution(solution.title)}
-                    className="w-full py-3.5 rounded-xl bg-[#F7F3EC] group-hover:bg-[#10243C] text-[#10243C] group-hover:text-[#F7F3EC] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer font-heading group-hover:shadow-md"
+                    className="w-full py-3.5 rounded-xl bg-[#F7F3EC] group-hover:bg-[#10243C] text-[#10243C] group-hover:text-[#F7F3EC] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer font-heading group-hover:shadow-md active:scale-98"
                   >
                     <span>Solicitar Proposta por E-mail</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-[#B69A6B] transition-transform duration-200 group-hover:translate-x-1" />
+                    <ArrowRight className="w-3.5 h-3.5 text-[#B69A6B] transition-transform duration-200 group-hover:translate-x-1.5" />
                   </button>
                 </div>
               </motion.div>
